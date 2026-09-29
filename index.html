@@ -1,0 +1,4158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checklist de Veículos - COREN-PB</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#eef3f7;
+  color:#263238;
+}
+
+.container{
+  width:100%;
+  max-width:600px;
+  margin:auto;
+  padding:15px;
+}
+
+.header{
+  background:linear-gradient(135deg,#07579c,#0878bd);
+  color:white;
+  text-align:center;
+  padding:24px 15px;
+  border-radius:0 0 22px 22px;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);
+}
+
+.logo{
+  max-width:115px;
+  max-height:90px;
+  margin-bottom:10px;
+}
+
+.header h1{
+  margin:5px 0;
+  font-size:23px;
+}
+
+.header p{
+  margin:5px 0 0;
+  font-size:15px;
+}
+
+.status{
+  margin-top:15px;
+  padding:10px;
+  border-radius:10px;
+  background:#e8f5e9;
+  color:#176b2c;
+  font-weight:bold;
+  text-align:center;
+}
+
+.card{
+  background:white;
+  margin-top:16px;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 3px 10px rgba(0,0,0,.10);
+}
+
+.card h2{
+  margin:0 0 15px;
+  color:#07579c;
+  font-size:19px;
+  border-bottom:2px solid #e7eef4;
+  padding-bottom:9px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:14px;
+  margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  font-size:16px;
+  border:1px solid #b9c5cf;
+  border-radius:9px;
+  background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#0878bd;
+  box-shadow:0 0 0 2px rgba(8,120,189,.12);
+}
+
+input[readonly]{
+  background:#edf1f4;
+  color:#455a64;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.linha-botoes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
+}
+
+.opcao{
+  flex:1;
+  min-width:90px;
+  padding:11px 8px;
+  border:1px solid #b7c4cd;
+  background:#f7f9fa;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.opcao.selecionado{
+  background:#07579c;
+  color:white;
+  border-color:#07579c;
+}
+
+.item-check{
+  padding:13px 0;
+  border-bottom:1px solid #e5e5e5;
+}
+
+.item-check:last-child{
+  border-bottom:none;
+}
+
+.item-titulo{
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.btn{
+  width:100%;
+  border:none;
+  border-radius:11px;
+  padding:15px;
+  margin-top:12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-azul{
+  background:#07579c;
+  color:white;
+}
+
+.btn-verde{
+  background:#18864b;
+  color:white;
+}
+
+.btn-cinza{
+  background:#607d8b;
+  color:white;
+}
+
+.btn-vermelho{
+  background:#c62828;
+  color:white;
+}
+
+.foto-preview{
+  display:none;
+  width:100%;
+  max-height:320px;
+  object-fit:contain;
+  margin-top:12px;
+  border:2px solid #d5dde3;
+  border-radius:12px;
+  background:#f5f5f5;
+}
+
+.aviso{
+  display:none;
+  background:#fff3cd;
+  border:1px solid #ffe69c;
+  color:#664d03;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.erro{
+  display:none;
+  background:#fdecea;
+  color:#9b1c1c;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.sucesso{
+  display:none;
+  background:#e8f5e9;
+  color:#176b2c;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.oculto{
+  display:none;
+}
+
+canvas{
+  width:100%;
+  height:180px;
+  border:2px dashed #90a4ae;
+  border-radius:10px;
+  background:white;
+  touch-action:none;
+}
+
+.rodape{
+  text-align:center;
+  font-size:12px;
+  color:#607d8b;
+  padding:20px 5px;
+}
+
+@media(max-width:480px){
+
+  .container{
+    padding:10px;
+  }
+
+  .header h1{
+    font-size:20px;
+  }
+
+  .card{
+    padding:15px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+
+    <img
+      src="coren-pb.png"
+      alt="COREN-PB"
+      class="logo"
+      onerror="this.style.display='none'"
+    >
+
+    <h1>CHECKLIST DIGITAL DE VEÍCULOS</h1>
+    <p>Conselho Regional de Enfermagem da Paraíba</p>
+
+  </header>
+
+  <div id="statusAplicativo" class="status">
+    🟢 NOVO CHECKLIST DE SAÍDA
+  </div>
+
+    <!-- ETAPA DE SAÍDA -->
+  <section id="etapaSaida">
+
+    <div class="card">
+      <h2>🚙 Identificação do Veículo</h2>
+
+      <label for="veiculo">Veículo *</label>
+      <select id="veiculo" onchange="preencherPlaca()">
+        <option value="">Selecione o veículo</option>
+      </select>
+
+      <label for="placa">Placa</label>
+      <input
+        type="text"
+        id="placa"
+        placeholder="Preenchimento automático"
+        readonly
+      >
+
+      <label for="condutor">Condutor *</label>
+      <input
+        type="text"
+        id="condutor"
+        placeholder="Digite o nome do condutor"
+        autocomplete="name"
+      >
+
+      <label for="dataHoraSaida">Data / Hora da Saída</label>
+      <input
+        type="text"
+        id="dataHoraSaida"
+        readonly
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>⛽ Quilometragem e Combustível</h2>
+
+      <label for="kmSaida">KM de Saída *</label>
+      <input
+        type="number"
+        id="kmSaida"
+        inputmode="numeric"
+        min="0"
+        placeholder="Digite a quilometragem atual"
+      >
+
+      <label>Nível de Combustível *</label>
+
+      <div class="linha-botoes" id="combustivelSaida">
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivel(this,'Reserva')">
+          Reserva
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivel(this,'1/4')">
+          1/4
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivel(this,'1/2')">
+          1/2
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivel(this,'3/4')">
+          3/4
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivel(this,'Cheio')">
+          Cheio
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="nivelCombustivelSaida"
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🔍 Inspeção Externa</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Pneus dianteiros</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pneusDianteirosSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pneusDianteirosSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="pneusDianteirosSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Pneus traseiros</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pneusTraseirosSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pneusTraseirosSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="pneusTraseirosSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Para-brisa</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'parabrisaSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'parabrisaSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="parabrisaSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Faróis dianteiros / Piscas</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'faroisSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'faroisSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="faroisSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Faróis de neblina</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'neblinaSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'neblinaSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="neblinaSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Palhetas dianteiras</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'palhetasDianteirasSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'palhetasDianteirasSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="palhetasDianteirasSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Palheta traseira</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'palhetaTraseiraSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'palhetaTraseiraSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="palhetaTraseiraSaida">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Lanternas / Piscas traseiros</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'lanternasSaida','OK')">
+            ✓ OK
+          </button>
+
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'lanternasSaida','Avaria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="lanternasSaida">
+      </div>
+
+    </div>
+
+        <div class="card">
+
+      <h2>🧰 Equipamentos e Acessórios</h2>
+
+      <div id="listaAcessoriosSaida">
+
+        <div class="item-check">
+          <div class="item-titulo">Extintor de incêndio</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'extintorSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'extintorSaida','Faltante')">✕ Faltante</button>
+          </div>
+          <input type="hidden" id="extintorSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Bancos</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'bancosSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'bancosSaida','Avaria')">⚠ Avaria</button>
+          </div>
+          <input type="hidden" id="bancosSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Tapetes</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'tapetesSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'tapetesSaida','Faltante')">✕ Faltante</button>
+          </div>
+          <input type="hidden" id="tapetesSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Rádio / Multimídia</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'radioSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'radioSaida','Avaria')">⚠ Avaria</button>
+          </div>
+          <input type="hidden" id="radioSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Manual do veículo / proprietário</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'manualSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'manualSaida','Faltante')">✕ Faltante</button>
+          </div>
+          <input type="hidden" id="manualSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Alarme</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'alarmeSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'alarmeSaida','Avaria')">⚠ Avaria</button>
+          </div>
+          <input type="hidden" id="alarmeSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Documentos do veículo</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'documentosSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'documentosSaida','Faltante')">✕ Faltante</button>
+          </div>
+          <input type="hidden" id="documentosSaida">
+        </div>
+
+        <div class="item-check">
+          <div class="item-titulo">Antena</div>
+          <div class="linha-botoes">
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'antenaSaida','OK')">✓ OK</button>
+            <button type="button" class="opcao"
+              onclick="marcarItem(this,'antenaSaida','Faltante')">✕ Faltante</button>
+          </div>
+          <input type="hidden" id="antenaSaida">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🔧 Verificação Mecânica e Segurança</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Fluido de freio</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'freioSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'freioSaida','Irregular')">⚠ Irregular</button>
+        </div>
+        <input type="hidden" id="freioSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Líquido de arrefecimento</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'arrefecimentoSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'arrefecimentoSaida','Irregular')">⚠ Irregular</button>
+        </div>
+        <input type="hidden" id="arrefecimentoSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Fluido da direção hidráulica</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'direcaoSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'direcaoSaida','Irregular')">⚠ Irregular</button>
+        </div>
+        <input type="hidden" id="direcaoSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Bateria — controle visual</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'bateriaSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'bateriaSaida','Avaria')">⚠ Avaria</button>
+        </div>
+        <input type="hidden" id="bateriaSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Amortecedores</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'amortecedoresSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'amortecedoresSaida','Avaria')">⚠ Avaria</button>
+        </div>
+        <input type="hidden" id="amortecedoresSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Portinhola do tanque de combustível</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'portinholaSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'portinholaSaida','Avaria')">⚠ Avaria</button>
+        </div>
+        <input type="hidden" id="portinholaSaida">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🛞 Porta-malas e Itens Obrigatórios</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Estepe</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'estepeSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'estepeSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="estepeSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Triângulo</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'trianguloSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'trianguloSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="trianguloSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Chave de roda</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'chaveRodaSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'chaveRodaSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="chaveRodaSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Macaco</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'macacoSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'macacoSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="macacoSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Flanela</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'flanelaSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'flanelaSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="flanelaSaida">
+      </div>
+
+      <div class="item-check">
+        <div class="item-titulo">Prancheta em acrílico</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pranchetaSaida','OK')">✓ OK</button>
+          <button type="button" class="opcao"
+            onclick="marcarItem(this,'pranchetaSaida','Faltante')">✕ Faltante</button>
+        </div>
+        <input type="hidden" id="pranchetaSaida">
+      </div>
+
+    </div>
+
+        <div class="card">
+
+      <h2>⚠️ Avarias e Observações</h2>
+
+      <p>
+        Caso exista item avariado, irregular ou faltante,
+        descreva abaixo a ocorrência.
+      </p>
+
+      <label for="observacaoSaida">Observações da Saída</label>
+
+      <textarea
+        id="observacaoSaida"
+        placeholder="Descreva aqui qualquer avaria, item faltante ou irregularidade encontrada..."
+      ></textarea>
+
+      <div id="avisoObservacaoSaida" class="aviso">
+        ⚠️ Foi identificada uma irregularidade.
+        A observação deverá ser preenchida antes de registrar a saída.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>📷 Foto de Avaria</h2>
+
+      <p>
+        Se houver avaria no veículo, você poderá registrar uma foto.
+      </p>
+
+      <input
+        type="file"
+        id="fotoAvariaSaida"
+        accept="image/*"
+        capture="environment"
+        onchange="mostrarFoto(
+          this,
+          'previewAvariaSaida'
+        )"
+      >
+
+      <img
+        id="previewAvariaSaida"
+        class="foto-preview"
+        alt="Foto da avaria"
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🤳 Registro Facial de Saída</h2>
+
+      <p>
+        Tire uma foto facial do condutor no momento da saída.
+      </p>
+
+      <strong>
+        A foto facial será obrigatória para registrar a saída.
+      </strong>
+
+      <input
+        type="file"
+        id="fotoFacialSaida"
+        accept="image/*"
+        capture="user"
+        onchange="mostrarFoto(
+          this,
+          'previewFacialSaida'
+        )"
+      >
+
+      <img
+        id="previewFacialSaida"
+        class="foto-preview"
+        alt="Registro facial de saída"
+      >
+
+      <div id="avisoFotoSaida" class="aviso">
+        📷 É necessário realizar o registro facial antes de continuar.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>✍️ Assinatura do Condutor</h2>
+
+      <p>
+        Assine no quadro abaixo utilizando o dedo no celular
+        ou o mouse no computador.
+      </p>
+
+      <canvas id="assinaturaSaida"></canvas>
+
+      <button
+        type="button"
+        class="btn btn-cinza"
+        onclick="limparAssinatura('assinaturaSaida')">
+        LIMPAR ASSINATURA
+      </button>
+
+      <div id="avisoAssinaturaSaida" class="aviso">
+        ✍️ A assinatura do condutor é obrigatória.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div id="erroSaida" class="erro"></div>
+
+      <div id="sucessoSaida" class="sucesso">
+        ✅ Saída registrada com sucesso.
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-verde"
+        onclick="registrarSaida()">
+        ✓ REGISTRAR SAÍDA
+      </button>
+
+    </div>
+
+  </section>
+
+    <!-- ETAPA DE CHEGADA -->
+  <section id="etapaChegada" class="oculto">
+
+    <div class="card">
+
+      <h2>🔵 Viagem em Andamento</h2>
+
+      <div class="status">
+        SAÍDA REGISTRADA — AGUARDANDO CHEGADA
+      </div>
+
+      <label>Veículo</label>
+      <input
+        type="text"
+        id="veiculoChegada"
+        readonly
+      >
+
+      <label>Placa</label>
+      <input
+        type="text"
+        id="placaChegada"
+        readonly
+      >
+
+      <label>Condutor</label>
+      <input
+        type="text"
+        id="condutorChegada"
+        readonly
+      >
+
+      <label>Data / Hora da Saída</label>
+      <input
+        type="text"
+        id="dataHoraSaidaChegada"
+        readonly
+      >
+
+      <label>KM de Saída</label>
+      <input
+        type="text"
+        id="kmSaidaChegada"
+        readonly
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🏁 Registro de Chegada</h2>
+
+      <label for="kmChegada">KM de Chegada *</label>
+
+      <input
+        type="number"
+        id="kmChegada"
+        inputmode="numeric"
+        min="0"
+        placeholder="Digite a quilometragem de chegada"
+        oninput="calcularKmPercorrido()"
+      >
+
+      <label for="kmPercorrido">KM Percorrido</label>
+
+      <input
+        type="text"
+        id="kmPercorrido"
+        readonly
+      >
+
+      <label for="dataHoraChegada">
+        Data / Hora da Chegada
+      </label>
+
+      <input
+        type="text"
+        id="dataHoraChegada"
+        readonly
+      >
+
+      <label>Nível de Combustível na Chegada *</label>
+
+      <div
+        class="linha-botoes"
+        id="combustivelChegada"
+      >
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivelChegada(this,'Reserva')">
+          Reserva
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivelChegada(this,'1/4')">
+          1/4
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivelChegada(this,'1/2')">
+          1/2
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivelChegada(this,'3/4')">
+          3/4
+        </button>
+
+        <button
+          type="button"
+          class="opcao"
+          onclick="selecionarCombustivelChegada(this,'Cheio')">
+          Cheio
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="nivelCombustivelChegada"
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🔍 Inspeção de Chegada</h2>
+
+      <p>
+        Confira o estado do veículo no retorno.
+        O aplicativo comparará os itens com a inspeção de saída.
+      </p>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Pneus dianteiros
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'pneusDianteirosChegada',
+              'pneusDianteirosSaida',
+              'OK',
+              'Pneus dianteiros'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'pneusDianteirosChegada',
+              'pneusDianteirosSaida',
+              'Avaria',
+              'Pneus dianteiros'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="pneusDianteirosChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Pneus traseiros
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'pneusTraseirosChegada',
+              'pneusTraseirosSaida',
+              'OK',
+              'Pneus traseiros'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'pneusTraseirosChegada',
+              'pneusTraseirosSaida',
+              'Avaria',
+              'Pneus traseiros'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="pneusTraseirosChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Para-brisa
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'parabrisaChegada',
+              'parabrisaSaida',
+              'OK',
+              'Para-brisa'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'parabrisaChegada',
+              'parabrisaSaida',
+              'Avaria',
+              'Para-brisa'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="parabrisaChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Faróis dianteiros / Piscas
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'faroisChegada',
+              'faroisSaida',
+              'OK',
+              'Faróis dianteiros / Piscas'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'faroisChegada',
+              'faroisSaida',
+              'Avaria',
+              'Faróis dianteiros / Piscas'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="faroisChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Faróis de neblina
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'neblinaChegada',
+              'neblinaSaida',
+              'OK',
+              'Faróis de neblina'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'neblinaChegada',
+              'neblinaSaida',
+              'Avaria',
+              'Faróis de neblina'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="neblinaChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Palhetas dianteiras
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'palhetasDianteirasChegada',
+              'palhetasDianteirasSaida',
+              'OK',
+              'Palhetas dianteiras'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'palhetasDianteirasChegada',
+              'palhetasDianteirasSaida',
+              'Avaria',
+              'Palhetas dianteiras'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="palhetasDianteirasChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Palheta traseira
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'palhetaTraseiraChegada',
+              'palhetaTraseiraSaida',
+              'OK',
+              'Palheta traseira'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'palhetaTraseiraChegada',
+              'palhetaTraseiraSaida',
+              'Avaria',
+              'Palheta traseira'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="palhetaTraseiraChegada"
+        >
+
+      </div>
+
+
+      <div class="item-check">
+
+        <div class="item-titulo">
+          Lanternas / Piscas traseiros
+        </div>
+
+        <div class="linha-botoes">
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'lanternasChegada',
+              'lanternasSaida',
+              'OK',
+              'Lanternas / Piscas traseiros'
+            )">
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarChegada(
+              this,
+              'lanternasChegada',
+              'lanternasSaida',
+              'Avaria',
+              'Lanternas / Piscas traseiros'
+            )">
+            ⚠ Avaria
+          </button>
+
+        </div>
+
+        <input
+          type="hidden"
+          id="lanternasChegada"
+        >
+
+      </div>
+
+    </div>
+
+        <div class="card">
+
+      <h2>🧰 Equipamentos e Acessórios — Chegada</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Extintor de incêndio</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'extintorChegada','extintorSaida','OK','Extintor de incêndio')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'extintorChegada','extintorSaida','Faltante','Extintor de incêndio')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="extintorChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Bancos</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'bancosChegada','bancosSaida','OK','Bancos')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'bancosChegada','bancosSaida','Avaria','Bancos')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="bancosChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Tapetes</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'tapetesChegada','tapetesSaida','OK','Tapetes')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'tapetesChegada','tapetesSaida','Faltante','Tapetes')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="tapetesChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Rádio / Multimídia</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'radioChegada','radioSaida','OK','Rádio / Multimídia')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'radioChegada','radioSaida','Avaria','Rádio / Multimídia')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="radioChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Manual do veículo / proprietário</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'manualChegada','manualSaida','OK','Manual do veículo')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'manualChegada','manualSaida','Faltante','Manual do veículo')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="manualChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Alarme</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'alarmeChegada','alarmeSaida','OK','Alarme')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'alarmeChegada','alarmeSaida','Avaria','Alarme')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="alarmeChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Documentos do veículo</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'documentosChegada','documentosSaida','OK','Documentos do veículo')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'documentosChegada','documentosSaida','Faltante','Documentos do veículo')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="documentosChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Antena</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'antenaChegada','antenaSaida','OK','Antena')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'antenaChegada','antenaSaida','Faltante','Antena')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="antenaChegada">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🔧 Verificação Mecânica — Chegada</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Fluido de freio</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'freioChegada','freioSaida','OK','Fluido de freio')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'freioChegada','freioSaida','Irregular','Fluido de freio')">
+            ⚠ Irregular
+          </button>
+        </div>
+        <input type="hidden" id="freioChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Líquido de arrefecimento</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'arrefecimentoChegada','arrefecimentoSaida','OK','Líquido de arrefecimento')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'arrefecimentoChegada','arrefecimentoSaida','Irregular','Líquido de arrefecimento')">
+            ⚠ Irregular
+          </button>
+        </div>
+        <input type="hidden" id="arrefecimentoChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Fluido da direção hidráulica</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'direcaoChegada','direcaoSaida','OK','Fluido da direção hidráulica')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'direcaoChegada','direcaoSaida','Irregular','Fluido da direção hidráulica')">
+            ⚠ Irregular
+          </button>
+        </div>
+        <input type="hidden" id="direcaoChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Bateria — controle visual</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'bateriaChegada','bateriaSaida','OK','Bateria')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'bateriaChegada','bateriaSaida','Avaria','Bateria')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="bateriaChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Amortecedores</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'amortecedoresChegada','amortecedoresSaida','OK','Amortecedores')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'amortecedoresChegada','amortecedoresSaida','Avaria','Amortecedores')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="amortecedoresChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Portinhola do tanque de combustível</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'portinholaChegada','portinholaSaida','OK','Portinhola do tanque')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'portinholaChegada','portinholaSaida','Avaria','Portinhola do tanque')">
+            ⚠ Avaria
+          </button>
+        </div>
+        <input type="hidden" id="portinholaChegada">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🛞 Porta-malas e Itens Obrigatórios — Chegada</h2>
+
+      <div class="item-check">
+        <div class="item-titulo">Estepe</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'estepeChegada','estepeSaida','OK','Estepe')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'estepeChegada','estepeSaida','Faltante','Estepe')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="estepeChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Triângulo</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'trianguloChegada','trianguloSaida','OK','Triângulo')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'trianguloChegada','trianguloSaida','Faltante','Triângulo')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="trianguloChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Chave de roda</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'chaveRodaChegada','chaveRodaSaida','OK','Chave de roda')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'chaveRodaChegada','chaveRodaSaida','Faltante','Chave de roda')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="chaveRodaChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Macaco</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'macacoChegada','macacoSaida','OK','Macaco')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'macacoChegada','macacoSaida','Faltante','Macaco')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="macacoChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Flanela</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'flanelaChegada','flanelaSaida','OK','Flanela')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'flanelaChegada','flanelaSaida','Faltante','Flanela')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="flanelaChegada">
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Prancheta em acrílico</div>
+        <div class="linha-botoes">
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'pranchetaChegada','pranchetaSaida','OK','Prancheta em acrílico')">
+            ✓ OK
+          </button>
+          <button type="button" class="opcao"
+            onclick="marcarChegada(this,'pranchetaChegada','pranchetaSaida','Faltante','Prancheta em acrílico')">
+            ✕ Faltante
+          </button>
+        </div>
+        <input type="hidden" id="pranchetaChegada">
+      </div>
+
+    </div>
+
+        <div class="card">
+
+      <h2>⚠️ Divergências na Chegada</h2>
+
+      <div id="avisoDivergencia" class="aviso">
+        ⚠️ DIVERGÊNCIA IDENTIFICADA ENTRE A SAÍDA E A CHEGADA.
+      </div>
+
+      <div id="listaDivergencias"></div>
+
+      <label for="observacaoChegada">
+        Observações da Chegada
+      </label>
+
+      <textarea
+        id="observacaoChegada"
+        placeholder="Descreva qualquer avaria, item faltante, irregularidade ou ocorrência identificada na chegada..."
+      ></textarea>
+
+      <div id="avisoObservacaoChegada" class="aviso">
+        ⚠️ Existe uma divergência.
+        Para finalizar a chegada, descreva obrigatoriamente
+        a ocorrência no campo de observações.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>📷 Foto de Avaria — Chegada</h2>
+
+      <p>
+        Caso tenha sido identificada uma nova avaria,
+        registre uma foto do local.
+      </p>
+
+      <input
+        type="file"
+        id="fotoAvariaChegada"
+        accept="image/*"
+        capture="environment"
+        onchange="mostrarFoto(
+          this,
+          'previewAvariaChegada'
+        )"
+      >
+
+      <img
+        id="previewAvariaChegada"
+        class="foto-preview"
+        alt="Foto da avaria na chegada"
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>🤳 Registro Facial de Chegada</h2>
+
+      <p>
+        Tire uma nova foto facial do condutor
+        no momento da chegada.
+      </p>
+
+      <strong>
+        A foto facial da chegada é obrigatória.
+      </strong>
+
+      <input
+        type="file"
+        id="fotoFacialChegada"
+        accept="image/*"
+        capture="user"
+        onchange="mostrarFoto(
+          this,
+          'previewFacialChegada'
+        )"
+      >
+
+      <img
+        id="previewFacialChegada"
+        class="foto-preview"
+        alt="Registro facial de chegada"
+      >
+
+      <div id="avisoFotoChegada" class="aviso">
+        📷 É necessário realizar o registro facial
+        da chegada antes de finalizar.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>✍️ Assinatura do Condutor — Chegada</h2>
+
+      <p>
+        Assine no quadro abaixo utilizando o dedo
+        no celular ou o mouse no computador.
+      </p>
+
+      <canvas id="assinaturaChegada"></canvas>
+
+      <button
+        type="button"
+        class="btn btn-cinza"
+        onclick="limparAssinatura('assinaturaChegada')">
+        LIMPAR ASSINATURA
+      </button>
+
+      <div id="avisoAssinaturaChegada" class="aviso">
+        ✍️ A assinatura da chegada é obrigatória.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div id="erroChegada" class="erro"></div>
+
+      <div id="sucessoChegada" class="sucesso">
+        ✅ Chegada finalizada com sucesso.
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-verde"
+        onclick="finalizarChegada()">
+        ✓ FINALIZAR CHEGADA
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- RELATÓRIO FINAL -->
+  <section id="etapaFinal" class="oculto">
+
+    <div class="card">
+
+      <h2>✅ Checklist Finalizado</h2>
+
+      <div class="sucesso" style="display:block;">
+        Checklist de saída e chegada concluído.
+      </div>
+
+      <p>
+        O relatório final está pronto para conferência.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-azul"
+        onclick="gerarPDF()">
+        📄 BAIXAR RELATÓRIO EM PDF
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-cinza"
+        onclick="novoChecklist()">
+        🚙 INICIAR NOVO CHECKLIST
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <div class="rodape">
+    COREN-PB — Checklist Digital de Veículos
+  </div>
+
+</div>
+
+  <script>
+
+/* =========================================
+   CHECKLIST DIGITAL DE VEÍCULOS - COREN-PB
+   ========================================= */
+
+
+/* =========================================
+   VEÍCULOS
+   As placas poderão ser ajustadas depois
+   conforme o cadastro oficial da frota.
+   ========================================= */
+
+const veiculos = [
+  { nome: "Nissan Kicks", placa: "" },
+  { nome: "Jetta", placa: "JED4055" },
+  { nome: "Outro veículo", placa: "" }
+];
+
+
+/* =========================================
+   VARIÁVEIS PRINCIPAIS
+   ========================================= */
+
+let combustivelSaidaSelecionado = "";
+let combustivelChegadaSelecionado = "";
+
+let assinaturaSaidaFeita = false;
+let assinaturaChegadaFeita = false;
+
+let divergencias = [];
+
+let dadosViagem = null;
+
+
+/* =========================================
+   DATA E HORA
+   ========================================= */
+
+function dataHoraAtual(){
+
+  const agora = new Date();
+
+  return agora.toLocaleString(
+    "pt-BR",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
+
+}
+
+
+/* =========================================
+   CARREGAR VEÍCULOS
+   ========================================= */
+
+function carregarVeiculos(){
+
+  const select = document.getElementById("veiculo");
+
+  veiculos.forEach((item, indice) => {
+
+    const option = document.createElement("option");
+
+    option.value = indice;
+    option.textContent = item.nome;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+/* =========================================
+   PREENCHER PLACA AUTOMATICAMENTE
+   ========================================= */
+
+function preencherPlaca(){
+
+  const select = document.getElementById("veiculo");
+  const placa = document.getElementById("placa");
+
+  if(select.value === ""){
+
+    placa.value = "";
+    return;
+
+  }
+
+  const escolhido = veiculos[Number(select.value)];
+
+  placa.value = escolhido.placa || "PLACA A CADASTRAR";
+
+}
+
+
+/* =========================================
+   SELEÇÃO DO COMBUSTÍVEL - SAÍDA
+   ========================================= */
+
+function selecionarCombustivel(botao, valor){
+
+  combustivelSaidaSelecionado = valor;
+
+  document.getElementById(
+    "nivelCombustivelSaida"
+  ).value = valor;
+
+  const botoes =
+    document.querySelectorAll(
+      "#combustivelSaida .opcao"
+    );
+
+  botoes.forEach(btn =>
+    btn.classList.remove("selecionado")
+  );
+
+  botao.classList.add("selecionado");
+
+}
+
+
+/* =========================================
+   SELEÇÃO DO COMBUSTÍVEL - CHEGADA
+   ========================================= */
+
+function selecionarCombustivelChegada(botao, valor){
+
+  combustivelChegadaSelecionado = valor;
+
+  document.getElementById(
+    "nivelCombustivelChegada"
+  ).value = valor;
+
+  const botoes =
+    document.querySelectorAll(
+      "#combustivelChegada .opcao"
+    );
+
+  botoes.forEach(btn =>
+    btn.classList.remove("selecionado")
+  );
+
+  botao.classList.add("selecionado");
+
+}
+
+
+/* =========================================
+   MARCAR ITEM NA SAÍDA
+   ========================================= */
+
+function marcarItem(botao, idCampo, valor){
+
+  const campo = document.getElementById(idCampo);
+
+  campo.value = valor;
+
+  const grupo =
+    botao.parentElement.querySelectorAll(".opcao");
+
+  grupo.forEach(btn =>
+    btn.classList.remove("selecionado")
+  );
+
+  botao.classList.add("selecionado");
+
+  verificarIrregularidadeSaida();
+
+}
+
+
+/* =========================================
+   VERIFICAR IRREGULARIDADES NA SAÍDA
+   ========================================= */
+
+function verificarIrregularidadeSaida(){
+
+  const campos =
+    document.querySelectorAll(
+      "#etapaSaida input[type='hidden']"
+    );
+
+  let irregularidade = false;
+
+  campos.forEach(campo => {
+
+    if(
+      campo.value === "Avaria" ||
+      campo.value === "Faltante" ||
+      campo.value === "Irregular"
+    ){
+      irregularidade = true;
+    }
+
+  });
+
+  const aviso =
+    document.getElementById(
+      "avisoObservacaoSaida"
+    );
+
+  aviso.style.display =
+    irregularidade ? "block" : "none";
+
+  return irregularidade;
+
+}
+
+
+/* =========================================
+   MOSTRAR FOTO NA TELA
+   ========================================= */
+
+function mostrarFoto(input, idPreview){
+
+  const arquivo = input.files[0];
+
+  const preview =
+    document.getElementById(idPreview);
+
+  if(!arquivo){
+
+    preview.src = "";
+    preview.style.display = "none";
+
+    return;
+
+  }
+
+  if(!arquivo.type.startsWith("image/")){
+
+    alert("Selecione uma imagem válida.");
+
+    input.value = "";
+
+    preview.src = "";
+    preview.style.display = "none";
+
+    return;
+
+  }
+
+  const leitor = new FileReader();
+
+  leitor.onload = function(evento){
+
+    preview.src = evento.target.result;
+    preview.style.display = "block";
+
+  };
+
+  leitor.readAsDataURL(arquivo);
+
+}
+
+
+/* =========================================
+   CALCULAR KM PERCORRIDO
+   ========================================= */
+
+function calcularKmPercorrido(){
+
+  const kmSaida =
+    Number(
+      document.getElementById(
+        "kmSaidaChegada"
+      ).value
+    );
+
+  const kmChegada =
+    Number(
+      document.getElementById(
+        "kmChegada"
+      ).value
+    );
+
+  const campoPercorrido =
+    document.getElementById(
+      "kmPercorrido"
+    );
+
+  if(!kmChegada){
+
+    campoPercorrido.value = "";
+    return;
+
+  }
+
+  if(kmChegada < kmSaida){
+
+    campoPercorrido.value =
+      "KM INVÁLIDO";
+
+    return;
+
+  }
+
+  campoPercorrido.value =
+    kmChegada - kmSaida;
+
+  document.getElementById(
+    "dataHoraChegada"
+  ).value = dataHoraAtual();
+
+}
+
+
+/* =========================================
+   MARCAR ITEM NA CHEGADA
+   E COMPARAR COM A SAÍDA
+   ========================================= */
+
+function marcarChegada(
+  botao,
+  idChegada,
+  idSaida,
+  valor,
+  nomeItem
+){
+
+  const campoChegada =
+    document.getElementById(idChegada);
+
+  campoChegada.value = valor;
+
+  const grupo =
+    botao.parentElement.querySelectorAll(
+      ".opcao"
+    );
+
+  grupo.forEach(btn =>
+    btn.classList.remove("selecionado")
+  );
+
+  botao.classList.add("selecionado");
+
+
+  const campoSaida =
+    document.getElementById(idSaida);
+
+  const valorSaida =
+    campoSaida ? campoSaida.value : "";
+
+
+  removerDivergencia(nomeItem);
+
+
+  if(
+    valorSaida &&
+    valorSaida !== valor
+  ){
+
+    divergencias.push({
+      item:nomeItem,
+      saida:valorSaida,
+      chegada:valor
+    });
+
+  }
+
+  atualizarDivergencias();
+
+}
+
+
+/* =========================================
+   REMOVER DIVERGÊNCIA ANTIGA
+   ========================================= */
+
+function removerDivergencia(nomeItem){
+
+  divergencias =
+    divergencias.filter(
+      item => item.item !== nomeItem
+    );
+
+}
+
+
+/* =========================================
+   MOSTRAR DIVERGÊNCIAS
+   ========================================= */
+
+function atualizarDivergencias(){
+
+  const aviso =
+    document.getElementById(
+      "avisoDivergencia"
+    );
+
+  const lista =
+    document.getElementById(
+      "listaDivergencias"
+    );
+
+  lista.innerHTML = "";
+
+
+  if(divergencias.length === 0){
+
+    aviso.style.display = "none";
+
+    return;
+
+  }
+
+
+  aviso.style.display = "block";
+
+
+  divergencias.forEach(item => {
+
+    const bloco =
+      document.createElement("div");
+
+    bloco.className = "aviso";
+
+    bloco.style.display = "block";
+
+    bloco.innerHTML =
+      "<strong>" +
+      item.item +
+      "</strong><br>" +
+      "Saída: " +
+      item.saida +
+      "<br>" +
+      "Chegada: " +
+      item.chegada;
+
+    lista.appendChild(bloco);
+
+  });
+
+}
+
+
+/* =========================================
+   PREPARAR CANVAS DE ASSINATURA
+   ========================================= */
+
+function prepararAssinatura(
+  idCanvas,
+  tipo
+){
+
+  const canvas =
+    document.getElementById(idCanvas);
+
+  if(!canvas) return;
+
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  function ajustarCanvas(){
+
+    const largura =
+      canvas.clientWidth;
+
+    const altura =
+      canvas.clientHeight;
+
+    if(
+      canvas.width !== largura ||
+      canvas.height !== altura
+    ){
+
+      const imagem =
+        canvas.toDataURL();
+
+      canvas.width = largura;
+      canvas.height = altura;
+
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#111";
+
+    }
+
+  }
+
+
+  ajustarCanvas();
+
+
+  let desenhando = false;
+
+
+  function posicao(evento){
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+    const toque =
+      evento.touches
+        ? evento.touches[0]
+        : evento;
+
+    return {
+      x:
+        toque.clientX -
+        rect.left,
+      y:
+        toque.clientY -
+        rect.top
+    };
+
+  }
+
+
+  function iniciar(evento){
+
+    evento.preventDefault();
+
+    desenhando = true;
+
+    const p = posicao(evento);
+
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+
+  }
+
+
+  function desenhar(evento){
+
+    if(!desenhando) return;
+
+    evento.preventDefault();
+
+    const p = posicao(evento);
+
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+
+    if(tipo === "saida"){
+
+      assinaturaSaidaFeita = true;
+
+    }else{
+
+      assinaturaChegadaFeita = true;
+
+    }
+
+  }
+
+
+  function parar(){
+
+    desenhando = false;
+
+  }
+
+
+  canvas.addEventListener(
+    "mousedown",
+    iniciar
+  );
+
+  canvas.addEventListener(
+    "mousemove",
+    desenhar
+  );
+
+  window.addEventListener(
+    "mouseup",
+    parar
+  );
+
+
+  canvas.addEventListener(
+    "touchstart",
+    iniciar,
+    {passive:false}
+  );
+
+  canvas.addEventListener(
+    "touchmove",
+    desenhar,
+    {passive:false}
+  );
+
+  canvas.addEventListener(
+    "touchend",
+    parar
+  );
+
+}
+
+
+/* =========================================
+   LIMPAR ASSINATURA
+   ========================================= */
+
+function limparAssinatura(idCanvas){
+
+  const canvas =
+    document.getElementById(idCanvas);
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  if(idCanvas === "assinaturaSaida"){
+
+    assinaturaSaidaFeita = false;
+
+  }
+
+  if(idCanvas === "assinaturaChegada"){
+
+    assinaturaChegadaFeita = false;
+
+  }
+
+}
+
+    /* =========================================
+   VALIDAR ITENS DO CHECKLIST DE SAÍDA
+   ========================================= */
+
+function validarItensSaida(){
+
+  const ids = [
+    "pneusDianteirosSaida",
+    "pneusTraseirosSaida",
+    "parabrisaSaida",
+    "faroisSaida",
+    "neblinaSaida",
+    "palhetasDianteirasSaida",
+    "palhetaTraseiraSaida",
+    "lanternasSaida",
+    "extintorSaida",
+    "bancosSaida",
+    "tapetesSaida",
+    "radioSaida",
+    "manualSaida",
+    "alarmeSaida",
+    "documentosSaida",
+    "antenaSaida",
+    "freioSaida",
+    "arrefecimentoSaida",
+    "direcaoSaida",
+    "bateriaSaida",
+    "amortecedoresSaida",
+    "portinholaSaida",
+    "estepeSaida",
+    "trianguloSaida",
+    "chaveRodaSaida",
+    "macacoSaida",
+    "flanelaSaida",
+    "pranchetaSaida"
+  ];
+
+  for(const id of ids){
+
+    const campo =
+      document.getElementById(id);
+
+    if(!campo || !campo.value){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* =========================================
+   COLETAR CHECKLIST DA SAÍDA
+   ========================================= */
+
+function coletarChecklistSaida(){
+
+  const campos =
+    document.querySelectorAll(
+      "#etapaSaida input[type='hidden']"
+    );
+
+  const checklist = {};
+
+  campos.forEach(campo => {
+
+    if(
+      campo.id !==
+      "nivelCombustivelSaida"
+    ){
+
+      checklist[campo.id] =
+        campo.value;
+
+    }
+
+  });
+
+  return checklist;
+
+}
+
+
+/* =========================================
+   REGISTRAR SAÍDA
+   ========================================= */
+
+function registrarSaida(){
+
+  const erro =
+    document.getElementById(
+      "erroSaida"
+    );
+
+  erro.style.display = "none";
+  erro.innerHTML = "";
+
+
+  const selectVeiculo =
+    document.getElementById(
+      "veiculo"
+    );
+
+  const placa =
+    document.getElementById(
+      "placa"
+    ).value.trim();
+
+  const condutor =
+    document.getElementById(
+      "condutor"
+    ).value.trim();
+
+  const kmSaida =
+    document.getElementById(
+      "kmSaida"
+    ).value.trim();
+
+  const observacao =
+    document.getElementById(
+      "observacaoSaida"
+    ).value.trim();
+
+  const fotoFacial =
+    document.getElementById(
+      "fotoFacialSaida"
+    );
+
+
+  if(selectVeiculo.value === ""){
+
+    mostrarErroSaida(
+      "Selecione o veículo."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !placa ||
+    placa === "PLACA A CADASTRAR"
+  ){
+
+    mostrarErroSaida(
+      "A placa deste veículo precisa estar cadastrada antes de registrar a saída."
+    );
+
+    return;
+
+  }
+
+
+  if(!condutor){
+
+    mostrarErroSaida(
+      "Informe o nome do condutor."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    kmSaida === "" ||
+    Number(kmSaida) < 0
+  ){
+
+    mostrarErroSaida(
+      "Informe corretamente o KM de saída."
+    );
+
+    return;
+
+  }
+
+
+  if(!combustivelSaidaSelecionado){
+
+    mostrarErroSaida(
+      "Informe o nível de combustível na saída."
+    );
+
+    return;
+
+  }
+
+
+  if(!validarItensSaida()){
+
+    mostrarErroSaida(
+      "Preencha todos os itens do checklist de saída."
+    );
+
+    return;
+
+  }
+
+
+  const irregularidade =
+    verificarIrregularidadeSaida();
+
+
+  if(
+    irregularidade &&
+    !observacao
+  ){
+
+    document.getElementById(
+      "avisoObservacaoSaida"
+    ).style.display = "block";
+
+    mostrarErroSaida(
+      "Existe item irregular, avariado ou faltante. Preencha a observação."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !fotoFacial.files ||
+    fotoFacial.files.length === 0
+  ){
+
+    document.getElementById(
+      "avisoFotoSaida"
+    ).style.display = "block";
+
+    mostrarErroSaida(
+      "Faça o registro facial de saída."
+    );
+
+    return;
+
+  }
+
+
+  if(!assinaturaSaidaFeita){
+
+    document.getElementById(
+      "avisoAssinaturaSaida"
+    ).style.display = "block";
+
+    mostrarErroSaida(
+      "A assinatura do condutor é obrigatória."
+    );
+
+    return;
+
+  }
+
+
+  const veiculoSelecionado =
+    veiculos[
+      Number(selectVeiculo.value)
+    ];
+
+
+  const horarioSaida =
+    document.getElementById(
+      "dataHoraSaida"
+    ).value || dataHoraAtual();
+
+
+  const assinatura =
+    document.getElementById(
+      "assinaturaSaida"
+    ).toDataURL("image/png");
+
+
+  dadosViagem = {
+
+    status:"EM ANDAMENTO",
+
+    veiculo:
+      veiculoSelecionado.nome,
+
+    placa:placa,
+
+    condutor:condutor,
+
+    dataHoraSaida:
+      horarioSaida,
+
+    kmSaida:
+      Number(kmSaida),
+
+    combustivelSaida:
+      combustivelSaidaSelecionado,
+
+    observacaoSaida:
+      observacao,
+
+    checklistSaida:
+      coletarChecklistSaida(),
+
+    assinaturaSaida:
+      assinatura
+
+  };
+
+
+  /*
+    A foto facial não será salva diretamente
+    no localStorage porque fotos podem exceder
+    o limite de armazenamento do navegador.
+
+    Posteriormente ela será enviada para o
+    armazenamento central pelo Código.gs.
+  */
+
+
+  try{
+
+    localStorage.setItem(
+      "checklistVeiculoEmAndamento",
+      JSON.stringify(dadosViagem)
+    );
+
+  }catch(erroLocal){
+
+    mostrarErroSaida(
+      "Não foi possível guardar a viagem neste aparelho."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "sucessoSaida"
+  ).style.display = "block";
+
+
+  abrirEtapaChegada();
+
+}
+
+
+/* =========================================
+   MENSAGEM DE ERRO DA SAÍDA
+   ========================================= */
+
+function mostrarErroSaida(mensagem){
+
+  const erro =
+    document.getElementById(
+      "erroSaida"
+    );
+
+  erro.innerHTML =
+    "⚠️ " + mensagem;
+
+  erro.style.display =
+    "block";
+
+  erro.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+
+/* =========================================
+   ABRIR ETAPA DE CHEGADA
+   ========================================= */
+
+function abrirEtapaChegada(){
+
+  if(!dadosViagem){
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "etapaSaida"
+  ).classList.add("oculto");
+
+
+  document.getElementById(
+    "etapaFinal"
+  ).classList.add("oculto");
+
+
+  document.getElementById(
+    "etapaChegada"
+  ).classList.remove("oculto");
+
+
+  document.getElementById(
+    "statusAplicativo"
+  ).innerHTML =
+    "🔵 VIAGEM EM ANDAMENTO — REGISTRAR CHEGADA";
+
+
+  document.getElementById(
+    "veiculoChegada"
+  ).value =
+    dadosViagem.veiculo || "";
+
+
+  document.getElementById(
+    "placaChegada"
+  ).value =
+    dadosViagem.placa || "";
+
+
+  document.getElementById(
+    "condutorChegada"
+  ).value =
+    dadosViagem.condutor || "";
+
+
+  document.getElementById(
+    "dataHoraSaidaChegada"
+  ).value =
+    dadosViagem.dataHoraSaida || "";
+
+
+  document.getElementById(
+    "kmSaidaChegada"
+  ).value =
+    dadosViagem.kmSaida ?? "";
+
+
+  restaurarValoresSaida();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================
+   RESTAURAR VALORES DA SAÍDA
+   PARA COMPARAÇÃO NA CHEGADA
+   ========================================= */
+
+function restaurarValoresSaida(){
+
+  if(
+    !dadosViagem ||
+    !dadosViagem.checklistSaida
+  ){
+
+    return;
+
+  }
+
+
+  Object.entries(
+    dadosViagem.checklistSaida
+  ).forEach(([id,valor]) => {
+
+    const campo =
+      document.getElementById(id);
+
+    if(campo){
+
+      campo.value = valor;
+
+    }
+
+  });
+
+}
+
+
+/* =========================================
+   RECUPERAR VIAGEM AO ABRIR O APLICATIVO
+   ========================================= */
+
+function recuperarViagem(){
+
+  const salva =
+    localStorage.getItem(
+      "checklistVeiculoEmAndamento"
+    );
+
+
+  if(!salva){
+
+    document.getElementById(
+      "dataHoraSaida"
+    ).value =
+      dataHoraAtual();
+
+    return;
+
+  }
+
+
+  try{
+
+    dadosViagem =
+      JSON.parse(salva);
+
+
+    if(
+      dadosViagem &&
+      dadosViagem.status ===
+      "EM ANDAMENTO"
+    ){
+
+      abrirEtapaChegada();
+
+    }
+
+  }catch(erro){
+
+    localStorage.removeItem(
+      "checklistVeiculoEmAndamento"
+    );
+
+    dadosViagem = null;
+
+  }
+
+}
+
+    /* =========================================
+   VALIDAR ITENS DA CHEGADA
+   ========================================= */
+
+function validarItensChegada(){
+
+  const ids = [
+    "pneusDianteirosChegada",
+    "pneusTraseirosChegada",
+    "parabrisaChegada",
+    "faroisChegada",
+    "neblinaChegada",
+    "palhetasDianteirasChegada",
+    "palhetaTraseiraChegada",
+    "lanternasChegada",
+
+    "extintorChegada",
+    "bancosChegada",
+    "tapetesChegada",
+    "radioChegada",
+    "manualChegada",
+    "alarmeChegada",
+    "documentosChegada",
+    "antenaChegada",
+
+    "freioChegada",
+    "arrefecimentoChegada",
+    "direcaoChegada",
+    "bateriaChegada",
+    "amortecedoresChegada",
+    "portinholaChegada",
+
+    "estepeChegada",
+    "trianguloChegada",
+    "chaveRodaChegada",
+    "macacoChegada",
+    "flanelaChegada",
+    "pranchetaChegada"
+  ];
+
+
+  for(const id of ids){
+
+    const campo =
+      document.getElementById(id);
+
+    if(!campo || !campo.value){
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* =========================================
+   COLETAR CHECKLIST DA CHEGADA
+   ========================================= */
+
+function coletarChecklistChegada(){
+
+  const campos =
+    document.querySelectorAll(
+      "#etapaChegada input[type='hidden']"
+    );
+
+  const checklist = {};
+
+
+  campos.forEach(campo => {
+
+    if(
+      campo.id !==
+      "nivelCombustivelChegada"
+    ){
+
+      checklist[campo.id] =
+        campo.value;
+
+    }
+
+  });
+
+
+  return checklist;
+
+}
+
+
+/* =========================================
+   MOSTRAR ERRO DA CHEGADA
+   ========================================= */
+
+function mostrarErroChegada(mensagem){
+
+  const erro =
+    document.getElementById(
+      "erroChegada"
+    );
+
+  erro.innerHTML =
+    "⚠️ " + mensagem;
+
+  erro.style.display =
+    "block";
+
+
+  erro.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+}
+
+
+/* =========================================
+   FINALIZAR CHEGADA
+   ========================================= */
+
+function finalizarChegada(){
+
+  const erro =
+    document.getElementById(
+      "erroChegada"
+    );
+
+  erro.style.display = "none";
+  erro.innerHTML = "";
+
+
+  if(!dadosViagem){
+
+    mostrarErroChegada(
+      "Não foi encontrado um registro de saída."
+    );
+
+    return;
+
+  }
+
+
+  const kmChegadaTexto =
+    document.getElementById(
+      "kmChegada"
+    ).value.trim();
+
+
+  if(kmChegadaTexto === ""){
+
+    mostrarErroChegada(
+      "Informe o KM de chegada."
+    );
+
+    return;
+
+  }
+
+
+  const kmChegada =
+    Number(kmChegadaTexto);
+
+
+  if(
+    !Number.isFinite(kmChegada) ||
+    kmChegada < Number(dadosViagem.kmSaida)
+  ){
+
+    mostrarErroChegada(
+      "O KM de chegada não pode ser menor que o KM de saída."
+    );
+
+    return;
+
+  }
+
+
+  if(!combustivelChegadaSelecionado){
+
+    mostrarErroChegada(
+      "Informe o nível de combustível na chegada."
+    );
+
+    return;
+
+  }
+
+
+  if(!validarItensChegada()){
+
+    mostrarErroChegada(
+      "Preencha todos os itens do checklist de chegada."
+    );
+
+    return;
+
+  }
+
+
+  const observacao =
+    document.getElementById(
+      "observacaoChegada"
+    ).value.trim();
+
+
+  if(
+    divergencias.length > 0 &&
+    !observacao
+  ){
+
+    document.getElementById(
+      "avisoObservacaoChegada"
+    ).style.display = "block";
+
+
+    mostrarErroChegada(
+      "Foi identificada divergência entre a saída e a chegada. Preencha obrigatoriamente a observação."
+    );
+
+    return;
+
+  }
+
+
+  const fotoFacial =
+    document.getElementById(
+      "fotoFacialChegada"
+    );
+
+
+  if(
+    !fotoFacial.files ||
+    fotoFacial.files.length === 0
+  ){
+
+    document.getElementById(
+      "avisoFotoChegada"
+    ).style.display = "block";
+
+
+    mostrarErroChegada(
+      "Faça o registro facial da chegada."
+    );
+
+    return;
+
+  }
+
+
+  if(!assinaturaChegadaFeita){
+
+    document.getElementById(
+      "avisoAssinaturaChegada"
+    ).style.display = "block";
+
+
+    mostrarErroChegada(
+      "A assinatura da chegada é obrigatória."
+    );
+
+    return;
+
+  }
+
+
+  const dataChegada =
+    document.getElementById(
+      "dataHoraChegada"
+    ).value ||
+    dataHoraAtual();
+
+
+  document.getElementById(
+    "dataHoraChegada"
+  ).value =
+    dataChegada;
+
+
+  const assinaturaChegada =
+    document.getElementById(
+      "assinaturaChegada"
+    ).toDataURL("image/png");
+
+
+  dadosViagem.status =
+    "FINALIZADA";
+
+
+  dadosViagem.dataHoraChegada =
+    dataChegada;
+
+
+  dadosViagem.kmChegada =
+    kmChegada;
+
+
+  dadosViagem.kmPercorrido =
+    kmChegada -
+    Number(dadosViagem.kmSaida);
+
+
+  dadosViagem.combustivelChegada =
+    combustivelChegadaSelecionado;
+
+
+  dadosViagem.observacaoChegada =
+    observacao;
+
+
+  dadosViagem.checklistChegada =
+    coletarChecklistChegada();
+
+
+  dadosViagem.divergencias =
+    divergencias;
+
+
+  dadosViagem.assinaturaChegada =
+    assinaturaChegada;
+
+
+  /*
+    As fotos faciais e fotos de avarias
+    serão enviadas ao armazenamento central
+    quando ligarmos o aplicativo ao Código.gs.
+  */
+
+
+  document.getElementById(
+    "sucessoChegada"
+  ).style.display =
+    "block";
+
+
+  /*
+    Retiramos somente a viagem EM ANDAMENTO.
+
+    Os dados permanecem na variável dadosViagem
+    para gerar o relatório final.
+  */
+
+  localStorage.removeItem(
+    "checklistVeiculoEmAndamento"
+  );
+
+
+  setTimeout(function(){
+
+    abrirEtapaFinal();
+
+  },500);
+
+}
+
+
+/* =========================================
+   ABRIR TELA FINAL
+   ========================================= */
+
+function abrirEtapaFinal(){
+
+  document.getElementById(
+    "etapaSaida"
+  ).classList.add("oculto");
+
+
+  document.getElementById(
+    "etapaChegada"
+  ).classList.add("oculto");
+
+
+  document.getElementById(
+    "etapaFinal"
+  ).classList.remove("oculto");
+
+
+  document.getElementById(
+    "statusAplicativo"
+  ).innerHTML =
+    "✅ CHECKLIST FINALIZADO";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+    /* =========================================
+   GERAR RELATÓRIO FINAL / PDF
+   ========================================= */
+
+function gerarPDF(){
+
+  if(
+    !dadosViagem ||
+    dadosViagem.status !== "FINALIZADA"
+  ){
+
+    alert(
+      "Finalize a chegada antes de gerar o relatório."
+    );
+
+    return;
+
+  }
+
+
+  const divergenciasTexto =
+    dadosViagem.divergencias &&
+    dadosViagem.divergencias.length
+    ?
+    dadosViagem.divergencias.map(item =>
+
+      "<tr>" +
+      "<td>" + escaparHTML(item.item) + "</td>" +
+      "<td>" + escaparHTML(item.saida) + "</td>" +
+      "<td>" + escaparHTML(item.chegada) + "</td>" +
+      "</tr>"
+
+    ).join("")
+    :
+    "<tr>" +
+    "<td colspan='3'>Nenhuma divergência identificada.</td>" +
+    "</tr>";
+
+
+  const checklistSaida =
+    montarTabelaChecklist(
+      dadosViagem.checklistSaida
+    );
+
+
+  const checklistChegada =
+    montarTabelaChecklist(
+      dadosViagem.checklistChegada
+    );
+
+
+  const assinaturaSaida =
+    dadosViagem.assinaturaSaida
+    ?
+    "<img class='assinatura' src='" +
+    dadosViagem.assinaturaSaida +
+    "'>"
+    :
+    "Não registrada";
+
+
+  const assinaturaChegada =
+    dadosViagem.assinaturaChegada
+    ?
+    "<img class='assinatura' src='" +
+    dadosViagem.assinaturaChegada +
+    "'>"
+    :
+    "Não registrada";
+
+
+  const html = `
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+Relatório de Checklist de Veículo
+</title>
+
+<style>
+
+@page{
+  size:A4;
+  margin:12mm;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#222;
+  margin:0;
+  padding:0;
+  font-size:12px;
+}
+
+.cabecalho{
+  text-align:center;
+  border-bottom:3px solid #07579c;
+  padding-bottom:12px;
+  margin-bottom:18px;
+}
+
+.cabecalho h1{
+  color:#07579c;
+  font-size:20px;
+  margin:5px 0;
+}
+
+.cabecalho p{
+  margin:4px 0;
+}
+
+h2{
+  background:#07579c;
+  color:white;
+  padding:8px;
+  font-size:14px;
+  margin-top:18px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:12px;
+}
+
+th,
+td{
+  border:1px solid #999;
+  padding:6px;
+  text-align:left;
+  vertical-align:top;
+}
+
+th{
+  background:#edf3f7;
+}
+
+.destaque{
+  font-weight:bold;
+}
+
+.alerta{
+  background:#fff3cd;
+}
+
+.assinaturas{
+  display:flex;
+  gap:20px;
+  margin-top:20px;
+}
+
+.bloco-assinatura{
+  flex:1;
+  text-align:center;
+}
+
+.assinatura{
+  max-width:220px;
+  max-height:90px;
+  display:block;
+  margin:5px auto;
+}
+
+.observacao{
+  border:1px solid #999;
+  min-height:55px;
+  padding:8px;
+  white-space:pre-wrap;
+}
+
+.rodape{
+  text-align:center;
+  margin-top:25px;
+  font-size:10px;
+  color:#555;
+}
+
+.botao-imprimir{
+  display:block;
+  width:100%;
+  max-width:350px;
+  margin:20px auto;
+  padding:14px;
+  border:0;
+  border-radius:8px;
+  background:#07579c;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+@media print{
+
+  .botao-imprimir{
+    display:none;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="cabecalho">
+
+  <h1>
+    CHECKLIST DIGITAL DE VEÍCULOS
+  </h1>
+
+  <p>
+    Conselho Regional de Enfermagem da Paraíba — COREN-PB
+  </p>
+
+</div>
+
+
+<h2>IDENTIFICAÇÃO</h2>
+
+<table>
+
+<tr>
+  <th>Veículo</th>
+  <td>${escaparHTML(dadosViagem.veiculo)}</td>
+
+  <th>Placa</th>
+  <td>${escaparHTML(dadosViagem.placa)}</td>
+</tr>
+
+<tr>
+  <th>Condutor</th>
+  <td colspan="3">
+    ${escaparHTML(dadosViagem.condutor)}
+  </td>
+</tr>
+
+</table>
+
+
+<h2>SAÍDA E CHEGADA</h2>
+
+<table>
+
+<tr>
+  <th></th>
+  <th>Saída</th>
+  <th>Chegada</th>
+</tr>
+
+<tr>
+  <th>Data / Hora</th>
+  <td>
+    ${escaparHTML(dadosViagem.dataHoraSaida)}
+  </td>
+  <td>
+    ${escaparHTML(dadosViagem.dataHoraChegada)}
+  </td>
+</tr>
+
+<tr>
+  <th>KM</th>
+  <td>
+    ${escaparHTML(dadosViagem.kmSaida)}
+  </td>
+  <td>
+    ${escaparHTML(dadosViagem.kmChegada)}
+  </td>
+</tr>
+
+<tr>
+  <th>Combustível</th>
+  <td>
+    ${escaparHTML(dadosViagem.combustivelSaida)}
+  </td>
+  <td>
+    ${escaparHTML(dadosViagem.combustivelChegada)}
+  </td>
+</tr>
+
+<tr>
+  <th>KM percorrido</th>
+  <td colspan="2" class="destaque">
+    ${escaparHTML(dadosViagem.kmPercorrido)} km
+  </td>
+</tr>
+
+</table>
+
+
+<h2>CHECKLIST DE SAÍDA</h2>
+
+${checklistSaida}
+
+
+<h2>CHECKLIST DE CHEGADA</h2>
+
+${checklistChegada}
+
+
+<h2>DIVERGÊNCIAS IDENTIFICADAS</h2>
+
+<table>
+
+<tr>
+  <th>Item</th>
+  <th>Saída</th>
+  <th>Chegada</th>
+</tr>
+
+${divergenciasTexto}
+
+</table>
+
+
+<h2>OBSERVAÇÕES DA SAÍDA</h2>
+
+<div class="observacao">
+${escaparHTML(
+  dadosViagem.observacaoSaida ||
+  "Sem observações."
+)}
+</div>
+
+
+<h2>OBSERVAÇÕES DA CHEGADA</h2>
+
+<div class="observacao">
+${escaparHTML(
+  dadosViagem.observacaoChegada ||
+  "Sem observações."
+)}
+</div>
+
+
+<h2>ASSINATURAS</h2>
+
+<div class="assinaturas">
+
+  <div class="bloco-assinatura">
+
+    <strong>Saída</strong>
+
+    ${assinaturaSaida}
+
+    <div>
+      ${escaparHTML(dadosViagem.condutor)}
+    </div>
+
+  </div>
+
+
+  <div class="bloco-assinatura">
+
+    <strong>Chegada</strong>
+
+    ${assinaturaChegada}
+
+    <div>
+      ${escaparHTML(dadosViagem.condutor)}
+    </div>
+
+  </div>
+
+</div>
+
+
+<button
+  class="botao-imprimir"
+  onclick="window.print()"
+>
+  📄 IMPRIMIR / SALVAR EM PDF
+</button>
+
+
+<div class="rodape">
+
+  Documento gerado pelo
+  Checklist Digital de Veículos — COREN-PB.
+
+</div>
+
+
+</body>
+</html>
+`;
+
+
+  const janela =
+    window.open(
+      "",
+      "_blank"
+    );
+
+
+  if(!janela){
+
+    alert(
+      "O navegador bloqueou a abertura do relatório. Permita pop-ups para gerar o PDF."
+    );
+
+    return;
+
+  }
+
+
+  janela.document.open();
+
+  janela.document.write(html);
+
+  janela.document.close();
+
+}
+
+
+/* =========================================
+   MONTAR TABELA DO CHECKLIST
+   ========================================= */
+
+function montarTabelaChecklist(objeto){
+
+  if(!objeto){
+
+    return "<p>Sem informações.</p>";
+
+  }
+
+
+  const nomes = {
+
+    pneusDianteiros:
+      "Pneus dianteiros",
+
+    pneusTraseiros:
+      "Pneus traseiros",
+
+    parabrisa:
+      "Para-brisa",
+
+    farois:
+      "Faróis dianteiros / Piscas",
+
+    neblina:
+      "Faróis de neblina",
+
+    palhetasDianteiras:
+      "Palhetas dianteiras",
+
+    palhetaTraseira:
+      "Palheta traseira",
+
+    lanternas:
+      "Lanternas / Piscas traseiros",
+
+    extintor:
+      "Extintor de incêndio",
+
+    bancos:
+      "Bancos",
+
+    tapetes:
+      "Tapetes",
+
+    radio:
+      "Rádio / Multimídia",
+
+    manual:
+      "Manual do veículo",
+
+    alarme:
+      "Alarme",
+
+    documentos:
+      "Documentos do veículo",
+
+    antena:
+      "Antena",
+
+    freio:
+      "Fluido de freio",
+
+    arrefecimento:
+      "Líquido de arrefecimento",
+
+    direcao:
+      "Fluido da direção hidráulica",
+
+    bateria:
+      "Bateria",
+
+    amortecedores:
+      "Amortecedores",
+
+    portinhola:
+      "Portinhola do tanque",
+
+    estepe:
+      "Estepe",
+
+    triangulo:
+      "Triângulo",
+
+    chaveRoda:
+      "Chave de roda",
+
+    macaco:
+      "Macaco",
+
+    flanela:
+      "Flanela",
+
+    prancheta:
+      "Prancheta em acrílico"
+
+  };
+
+
+  let linhas = "";
+
+
+  Object.entries(objeto).forEach(
+    ([chave,valor]) => {
+
+      const chaveLimpa =
+        chave
+        .replace("Saida","")
+        .replace("Chegada","");
+
+
+      const nome =
+        nomes[chaveLimpa] ||
+        chaveLimpa;
+
+
+      linhas +=
+        "<tr>" +
+        "<td>" +
+        escaparHTML(nome) +
+        "</td>" +
+        "<td>" +
+        escaparHTML(valor) +
+        "</td>" +
+        "</tr>";
+
+    }
+  );
+
+
+  return `
+    <table>
+
+      <tr>
+        <th>Item</th>
+        <th>Situação</th>
+      </tr>
+
+      ${linhas}
+
+    </table>
+  `;
+
+}
+
+
+/* =========================================
+   PROTEÇÃO DE TEXTO NO RELATÓRIO
+   ========================================= */
+
+function escaparHTML(valor){
+
+  if(
+    valor === null ||
+    valor === undefined
+  ){
+
+    return "";
+
+  }
+
+
+  return String(valor)
+
+    .replaceAll("&","&amp;")
+
+    .replaceAll("<","&lt;")
+
+    .replaceAll(">","&gt;")
+
+    .replaceAll('"',"&quot;")
+
+    .replaceAll("'","&#039;");
+
+}
+
+    /* =========================================
+   NOVO CHECKLIST
+   ========================================= */
+
+function novoChecklist(){
+
+  const confirmar =
+    confirm(
+      "Deseja iniciar um novo checklist?"
+    );
+
+  if(!confirmar){
+    return;
+  }
+
+  localStorage.removeItem(
+    "checklistVeiculoEmAndamento"
+  );
+
+  location.reload();
+
+}
+
+
+/* =========================================
+   INICIALIZAÇÃO DO APLICATIVO
+   ========================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    carregarVeiculos();
+
+    document.getElementById(
+      "dataHoraSaida"
+    ).value =
+      dataHoraAtual();
+
+
+    prepararAssinatura(
+      "assinaturaSaida",
+      "saida"
+    );
+
+
+    prepararAssinatura(
+      "assinaturaChegada",
+      "chegada"
+    );
+
+
+    recuperarViagem();
+
+  }
+);
+
+
+/* =========================================
+   AJUSTE DOS CANVAS AO GIRAR/REDIMENSIONAR
+   ========================================= */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    /*
+      Mantemos os campos responsivos.
+      Os canvas já recebem o tamanho
+      necessário na inicialização.
+    */
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
