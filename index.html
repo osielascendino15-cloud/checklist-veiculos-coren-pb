@@ -442,7 +442,281 @@ textarea{
 
     </div>
 
-        <!-- =========================================
+    <!-- =========================================
+     INSPEÇÃO EXTERNA — SAÍDA
+========================================== -->
+
+<div class="card">
+
+  <h2>🔍 Inspeção Externa — Saída</h2>
+
+  <!-- 1 -->
+  <div class="item-check">
+
+    <strong>1. Pneus Dianteiros</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('pneusDianteirosSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('pneusDianteirosSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('pneusDianteirosSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="pneusDianteirosSaida">
+
+    <textarea
+      id="pneusDianteirosSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 2 -->
+  <div class="item-check">
+
+    <strong>2. Pneus Traseiros</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('pneusTraseirosSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('pneusTraseirosSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('pneusTraseirosSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="pneusTraseirosSaida">
+
+    <textarea
+      id="pneusTraseirosSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 3 -->
+  <div class="item-check">
+
+    <strong>3. Para-brisa</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('parabrisaSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('parabrisaSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('parabrisaSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="parabrisaSaida">
+
+    <textarea
+      id="parabrisaSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 4 -->
+  <div class="item-check">
+
+    <strong>4. Faróis</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('faroisSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('faroisSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('faroisSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="faroisSaida">
+
+    <textarea
+      id="faroisSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+    <!-- 5 -->
+  <div class="item-check">
+
+    <strong>5. Faróis de Neblina</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('neblinaSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('neblinaSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('neblinaSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="neblinaSaida">
+
+    <textarea
+      id="neblinaSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 6 -->
+  <div class="item-check">
+
+    <strong>6. Palhetas Dianteiras</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('palhetasDianteirasSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('palhetasDianteirasSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('palhetasDianteirasSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="palhetasDianteirasSaida">
+
+    <textarea
+      id="palhetasDianteirasSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 7 -->
+  <div class="item-check">
+
+    <strong>7. Palheta Traseira</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('palhetaTraseiraSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('palhetaTraseiraSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('palhetaTraseiraSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="palhetaTraseiraSaida">
+
+    <textarea
+      id="palhetaTraseiraSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+
+  <!-- 8 -->
+  <div class="item-check">
+
+    <strong>8. Lanternas</strong>
+
+    <div class="opcoes">
+      <button type="button"
+        onclick="marcarItemSaida('lanternasSaida','OK',this)">
+        OK
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('lanternasSaida','AVARIA',this)">
+        AVARIA
+      </button>
+
+      <button type="button"
+        onclick="marcarItemSaida('lanternasSaida','FALTANTE',this)">
+        FALTANTE
+      </button>
+    </div>
+
+    <input type="hidden" id="lanternasSaida">
+
+    <textarea
+      id="lanternasSaidaObs"
+      class="observacao-item"
+      placeholder="Descreva obrigatoriamente a avaria ou falta"
+    ></textarea>
+
+  </div>
+
+</div>
+
+       
+    
+    <!-- =========================================
          ACESSÓRIOS / ITENS INTERNOS — SAÍDA
     ========================================== -->
 
@@ -2169,11 +2443,30 @@ function mostrarFoto(
 
       if(tipo === "avariaSaida"){
 
-        fotoAvariaSaidaBase64 =
-          foto;
+  fotoAvariaSaidaBase64 =
+    foto;
 
-      }
+  /*
+    APÓS A FOTO DE AVARIA DA SAÍDA,
+    AVANÇA AUTOMATICAMENTE
+    PARA O REGISTRO FACIAL.
+  */
 
+  setTimeout(function(){
+
+    const destino =
+      document.getElementById(
+        "blocoFotoFacialSaida"
+      );
+
+    destino.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+  },300);
+
+}
 
       if(tipo === "facialSaida"){
 
