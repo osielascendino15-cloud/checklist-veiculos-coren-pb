@@ -120,6 +120,62 @@ input[readonly]{
   color:#455a64;
 }
 
+/* BOTÕES DE FOTO */
+.input-foto-oculto{
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.btn-foto{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin-top:8px;
+  border:none;
+  border-radius:11px;
+  background:#07579c;
+  color:white;
+  text-align:center;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* RESUMO FINAL DA CHEGADA */
+.resumo-final{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+}
+
+.resumo-final th,
+.resumo-final td{
+  border:1px solid #d9e2e8;
+  padding:10px;
+  text-align:left;
+}
+
+.resumo-final th{
+  background:#eef5fa;
+  color:#07579c;
+}
+
+.aviso-fechar-app{
+  margin-top:16px;
+  padding:16px;
+  border:2px solid #18864b;
+  border-radius:12px;
+  background:#e8f5e9;
+  color:#176b2c;
+  text-align:center;
+  font-weight:bold;
+  line-height:1.5;
+}
+
 textarea{
   min-height:90px;
   resize:vertical;
@@ -251,7 +307,6 @@ textarea{
   display:none;
 }
 
-/* Destaque automático para campo obrigatório não preenchido */
 .campo-obrigatorio-erro{
   background:#ffe6e6 !important;
   border:2px solid #d93025 !important;
@@ -384,11 +439,10 @@ canvas{
       </label>
 
       <input
-        type="number"
+        type="text"
         id="kmSaida"
-        inputmode="numeric"
-        min="0"
-        placeholder="Digite a quilometragem atual"
+        inputmode="decimal"
+        placeholder="Ex.: 12500,5 ou 12500.5"
       >
 
       <label>
@@ -449,8 +503,7 @@ canvas{
 
     </div>
 
-
-    <!-- INSPEÇÃO EXTERNA - SAÍDA -->
+        <!-- INSPEÇÃO EXTERNA - SAÍDA -->
     <div class="card">
 
       <h2>🔍 Inspeção Externa</h2>
@@ -624,7 +677,8 @@ canvas{
         </div>
       </div>
 
-            <div class="item-check">
+
+      <div class="item-check">
         <div class="item-titulo">
           Faróis de neblina
         </div>
@@ -801,8 +855,7 @@ canvas{
 
     </div>
 
-
-    <!-- EQUIPAMENTOS E ACESSÓRIOS - SAÍDA -->
+        <!-- EQUIPAMENTOS E ACESSÓRIOS - SAÍDA -->
     <div class="card">
 
       <h2>🧰 Equipamentos e Acessórios</h2>
@@ -997,7 +1050,8 @@ canvas{
 
       </div>
 
-            <div class="item-check">
+
+      <div class="item-check">
 
         <div class="item-titulo">
           Ar-condicionado
@@ -1142,8 +1196,7 @@ canvas{
 
     </div>
 
-
-    <!-- OBSERVAÇÃO GERAL DE SAÍDA -->
+        <!-- OBSERVAÇÃO GERAL DE SAÍDA -->
     <div class="card">
 
       <h2>📝 Observação Geral da Saída</h2>
@@ -1172,10 +1225,18 @@ canvas{
       <input
         type="file"
         id="fotoAvariaSaida"
+        class="input-foto-oculto"
         accept="image/*"
         capture="environment"
         onchange="mostrarFoto(this,'previewAvariaSaida')"
       >
+
+      <label
+        for="fotoAvariaSaida"
+        class="btn-foto"
+      >
+        📷 FOTO
+      </label>
 
       <img
         id="previewAvariaSaida"
@@ -1198,10 +1259,18 @@ canvas{
       <input
         type="file"
         id="fotoFacialSaida"
+        class="input-foto-oculto"
         accept="image/*"
         capture="user"
         onchange="mostrarFoto(this,'previewFacialSaida')"
       >
+
+      <label
+        for="fotoFacialSaida"
+        class="btn-foto"
+      >
+        🤳 FOTO FACIAL
+      </label>
 
       <img
         id="previewFacialSaida"
@@ -1261,8 +1330,7 @@ canvas{
 
   </section>
 
-
-  <!-- ETAPA DE CHEGADA -->
+    <!-- ETAPA DE CHEGADA -->
   <section
     id="etapaChegada"
     class="oculto"
@@ -1270,22 +1338,16 @@ canvas{
 
     <div class="card">
 
-      <h2>🔵 Viagem em Andamento</h2>
+      <h2>🏁 Registro de Chegada</h2>
 
-      <div
-        class="status"
-        style="background:#e3f2fd;color:#07579c;"
-      >
-        SAÍDA REGISTRADA — AGUARDANDO CHEGADA
+      <div class="status">
+        🚙 SAÍDA REGISTRADA — AGUARDANDO CHEGADA
       </div>
 
-      <p style="text-align:center;font-weight:bold;margin-top:15px;">
-        Você já pode fechar o aplicativo.
-      </p>
-
-      <p style="text-align:center;">
-        Quando abrir novamente, esta viagem continuará registrada
-        e o aplicativo voltará para a etapa de chegada.
+      <p>
+        A viagem está em andamento.
+        Você pode fechar o aplicativo e abrir novamente depois.
+        Os dados da saída permanecerão salvos para continuar o registro da chegada.
       </p>
 
     </div>
@@ -1293,7 +1355,7 @@ canvas{
 
     <div class="card">
 
-      <h2>🚙 Dados da Viagem</h2>
+      <h2>🚘 Dados da Viagem</h2>
 
       <label for="veiculoChegada">
         Veículo
@@ -1350,7 +1412,18 @@ canvas{
 
     <div class="card">
 
-      <h2>🏁 Registro de Chegada</h2>
+      <h2>📍 Quilometragem de Chegada</h2>
+
+      <label for="kmChegada">
+        KM de Chegada *
+      </label>
+
+      <input
+        type="text"
+        id="kmChegada"
+        inputmode="decimal"
+        placeholder="Ex.: 12650,5 ou 12650.5"
+      >
 
       <label for="dataHoraChegada">
         Data / Hora da Chegada
@@ -1362,20 +1435,25 @@ canvas{
         readonly
       >
 
-      <label for="kmChegada">
-        KM de Chegada *
+      <label for="kmPercorrido">
+        KM Percorrido
       </label>
 
       <input
-        type="number"
-        id="kmChegada"
-        inputmode="numeric"
-        min="0"
-        placeholder="Digite a quilometragem de chegada"
+        type="text"
+        id="kmPercorrido"
+        readonly
       >
 
+    </div>
+
+
+    <div class="card">
+
+      <h2>⛽ Combustível na Chegada</h2>
+
       <label>
-        Nível de Combustível na Chegada *
+        Nível de Combustível *
       </label>
 
       <div
@@ -1432,7 +1510,7 @@ canvas{
 
     </div>
 
-        <!-- CHECKLIST DE CHEGADA -->
+        <!-- INSPEÇÃO EXTERNA - CHEGADA -->
     <div class="card">
 
       <h2>🔍 Inspeção Externa — Chegada</h2>
@@ -1444,7 +1522,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'pneusDianteirosChegada','OK')"
+            onclick="marcarItemChegada(this,'pneusDianteirosChegada','OK','Pneus dianteiros')"
           >
             ✓ OK
           </button>
@@ -1452,16 +1530,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'pneusDianteirosChegada','Avaria')"
+            onclick="marcarItemChegada(this,'pneusDianteirosChegada','Avaria','Pneus dianteiros')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="pneusDianteirosChegada"
+        <input type="hidden" id="pneusDianteirosChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_pneusDianteirosChegada"
         >
+          <label>
+            Pneus dianteiros — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_pneusDianteirosChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1472,7 +1561,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'pneusTraseirosChegada','OK')"
+            onclick="marcarItemChegada(this,'pneusTraseirosChegada','OK','Pneus traseiros')"
           >
             ✓ OK
           </button>
@@ -1480,16 +1569,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'pneusTraseirosChegada','Avaria')"
+            onclick="marcarItemChegada(this,'pneusTraseirosChegada','Avaria','Pneus traseiros')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="pneusTraseirosChegada"
+        <input type="hidden" id="pneusTraseirosChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_pneusTraseirosChegada"
         >
+          <label>
+            Pneus traseiros — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_pneusTraseirosChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1500,7 +1600,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'parabrisaChegada','OK')"
+            onclick="marcarItemChegada(this,'parabrisaChegada','OK','Para-brisa')"
           >
             ✓ OK
           </button>
@@ -1508,16 +1608,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'parabrisaChegada','Avaria')"
+            onclick="marcarItemChegada(this,'parabrisaChegada','Avaria','Para-brisa')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="parabrisaChegada"
+        <input type="hidden" id="parabrisaChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_parabrisaChegada"
         >
+          <label>
+            Para-brisa — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_parabrisaChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1530,7 +1641,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'faroisChegada','OK')"
+            onclick="marcarItemChegada(this,'faroisChegada','OK','Faróis dianteiros / Piscas')"
           >
             ✓ OK
           </button>
@@ -1538,16 +1649,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'faroisChegada','Avaria')"
+            onclick="marcarItemChegada(this,'faroisChegada','Avaria','Faróis dianteiros / Piscas')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="faroisChegada"
+        <input type="hidden" id="faroisChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_faroisChegada"
         >
+          <label>
+            Faróis dianteiros / Piscas — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_faroisChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1560,7 +1682,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'neblinaChegada','OK')"
+            onclick="marcarItemChegada(this,'neblinaChegada','OK','Faróis de neblina')"
           >
             ✓ OK
           </button>
@@ -1568,16 +1690,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'neblinaChegada','Avaria')"
+            onclick="marcarItemChegada(this,'neblinaChegada','Avaria','Faróis de neblina')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="neblinaChegada"
+        <input type="hidden" id="neblinaChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_neblinaChegada"
         >
+          <label>
+            Faróis de neblina — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_neblinaChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1590,7 +1723,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'palhetasDianteirasChegada','OK')"
+            onclick="marcarItemChegada(this,'palhetasDianteirasChegada','OK','Palhetas dianteiras')"
           >
             ✓ OK
           </button>
@@ -1598,16 +1731,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'palhetasDianteirasChegada','Avaria')"
+            onclick="marcarItemChegada(this,'palhetasDianteirasChegada','Avaria','Palhetas dianteiras')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="palhetasDianteirasChegada"
+        <input type="hidden" id="palhetasDianteirasChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_palhetasDianteirasChegada"
         >
+          <label>
+            Palhetas dianteiras — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_palhetasDianteirasChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1620,7 +1764,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'palhetaTraseiraChegada','OK')"
+            onclick="marcarItemChegada(this,'palhetaTraseiraChegada','OK','Palheta traseira')"
           >
             ✓ OK
           </button>
@@ -1628,16 +1772,27 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'palhetaTraseiraChegada','Avaria')"
+            onclick="marcarItemChegada(this,'palhetaTraseiraChegada','Avaria','Palheta traseira')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="palhetaTraseiraChegada"
+        <input type="hidden" id="palhetaTraseiraChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_palhetaTraseiraChegada"
         >
+          <label>
+            Palheta traseira — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_palhetaTraseiraChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
@@ -1650,7 +1805,7 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'lanternasChegada','OK')"
+            onclick="marcarItemChegada(this,'lanternasChegada','OK','Lanternas / Piscas traseiros')"
           >
             ✓ OK
           </button>
@@ -1658,38 +1813,44 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'lanternasChegada','Avaria')"
+            onclick="marcarItemChegada(this,'lanternasChegada','Avaria','Lanternas / Piscas traseiros')"
           >
             ⚠ Avaria
           </button>
         </div>
 
-        <input
-          type="hidden"
-          id="lanternasChegada"
+        <input type="hidden" id="lanternasChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_lanternasChegada"
         >
+          <label>
+            Lanternas / Piscas traseiros — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_lanternasChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
     </div>
 
-
-    <!-- EQUIPAMENTOS E ACESSÓRIOS - CHEGADA -->
+        <!-- EQUIPAMENTOS E ACESSÓRIOS - CHEGADA -->
     <div class="card">
 
       <h2>🧰 Equipamentos e Acessórios — Chegada</h2>
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Extintor de incêndio
-        </div>
+        <div class="item-titulo">Extintor de incêndio</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'extintorChegada','OK')"
+            onclick="marcarItemChegada(this,'extintorChegada','OK','Extintor de incêndio')"
           >
             ✓ OK
           </button>
@@ -1697,33 +1858,38 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'extintorChegada','Faltante')"
+            onclick="marcarItemChegada(this,'extintorChegada','Faltante','Extintor de incêndio')"
           >
             ✕ Faltante
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="extintorChegada"
-        >
+        <input type="hidden" id="extintorChegada">
 
+        <div
+          class="observacao-item"
+          id="boxObs_extintorChegada"
+        >
+          <label>
+            Extintor de incêndio — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_extintorChegada"
+            placeholder="Descreva a ocorrência..."
+          ></textarea>
+        </div>
       </div>
 
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Bancos
-        </div>
+        <div class="item-titulo">Bancos</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'bancosChegada','OK')"
+            onclick="marcarItemChegada(this,'bancosChegada','OK','Bancos')"
           >
             ✓ OK
           </button>
@@ -1731,33 +1897,38 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'bancosChegada','Avaria')"
+            onclick="marcarItemChegada(this,'bancosChegada','Avaria','Bancos')"
           >
             ⚠ Avaria
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="bancosChegada"
-        >
+        <input type="hidden" id="bancosChegada">
 
+        <div
+          class="observacao-item"
+          id="boxObs_bancosChegada"
+        >
+          <label>
+            Bancos — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_bancosChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Tapetes
-        </div>
+        <div class="item-titulo">Tapetes</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'tapetesChegada','OK')"
+            onclick="marcarItemChegada(this,'tapetesChegada','OK','Tapetes')"
           >
             ✓ OK
           </button>
@@ -1765,33 +1936,38 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'tapetesChegada','Faltante')"
+            onclick="marcarItemChegada(this,'tapetesChegada','Faltante','Tapetes')"
           >
             ✕ Faltante
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="tapetesChegada"
-        >
+        <input type="hidden" id="tapetesChegada">
 
+        <div
+          class="observacao-item"
+          id="boxObs_tapetesChegada"
+        >
+          <label>
+            Tapetes — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_tapetesChegada"
+            placeholder="Descreva o item faltante..."
+          ></textarea>
+        </div>
       </div>
 
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Rádio / Multimídia
-        </div>
+        <div class="item-titulo">Rádio / Multimídia</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'radioChegada','OK')"
+            onclick="marcarItemChegada(this,'radioChegada','OK','Rádio / Multimídia')"
           >
             ✓ OK
           </button>
@@ -1799,66 +1975,38 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'radioChegada','Avaria')"
+            onclick="marcarItemChegada(this,'radioChegada','Avaria','Rádio / Multimídia')"
           >
             ⚠ Avaria
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="radioChegada"
+        <input type="hidden" id="radioChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_radioChegada"
         >
+          <label>
+            Rádio / Multimídia — Observação obrigatória
+          </label>
 
-      </div>
-
-            <div class="item-check">
-
-        <div class="item-titulo">
-          Ar-condicionado
+          <textarea
+            id="obs_radioChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
         </div>
-
-        <div class="linha-botoes">
-
-          <button
-            type="button"
-            class="opcao"
-            onclick="marcarChegada(this,'arCondicionadoChegada','OK')"
-          >
-            ✓ OK
-          </button>
-
-          <button
-            type="button"
-            class="opcao"
-            onclick="marcarChegada(this,'arCondicionadoChegada','Avaria')"
-          >
-            ⚠ Avaria
-          </button>
-
-        </div>
-
-        <input
-          type="hidden"
-          id="arCondicionadoChegada"
-        >
-
       </div>
 
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Buzina
-        </div>
+        <div class="item-titulo">Ar-condicionado</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'buzinaChegada','OK')"
+            onclick="marcarItemChegada(this,'arCondicionadoChegada','OK','Ar-condicionado')"
           >
             ✓ OK
           </button>
@@ -1866,33 +2014,38 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'buzinaChegada','Avaria')"
+            onclick="marcarItemChegada(this,'arCondicionadoChegada','Avaria','Ar-condicionado')"
           >
             ⚠ Avaria
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="buzinaChegada"
-        >
+        <input type="hidden" id="arCondicionadoChegada">
 
+        <div
+          class="observacao-item"
+          id="boxObs_arCondicionadoChegada"
+        >
+          <label>
+            Ar-condicionado — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_arCondicionadoChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
 
       <div class="item-check">
-
-        <div class="item-titulo">
-          Cinto de segurança
-        </div>
+        <div class="item-titulo">Buzina</div>
 
         <div class="linha-botoes">
-
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'cintoChegada','OK')"
+            onclick="marcarItemChegada(this,'buzinaChegada','OK','Buzina')"
           >
             ✓ OK
           </button>
@@ -1900,32 +2053,74 @@ canvas{
           <button
             type="button"
             class="opcao"
-            onclick="marcarChegada(this,'cintoChegada','Avaria')"
+            onclick="marcarItemChegada(this,'buzinaChegada','Avaria','Buzina')"
           >
             ⚠ Avaria
           </button>
-
         </div>
 
-        <input
-          type="hidden"
-          id="cintoChegada"
-        >
+        <input type="hidden" id="buzinaChegada">
 
+        <div
+          class="observacao-item"
+          id="boxObs_buzinaChegada"
+        >
+          <label>
+            Buzina — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_buzinaChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
+      </div>
+
+
+      <div class="item-check">
+        <div class="item-titulo">Cinto de segurança</div>
+
+        <div class="linha-botoes">
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarItemChegada(this,'cintoChegada','OK','Cinto de segurança')"
+          >
+            ✓ OK
+          </button>
+
+          <button
+            type="button"
+            class="opcao"
+            onclick="marcarItemChegada(this,'cintoChegada','Avaria','Cinto de segurança')"
+          >
+            ⚠ Avaria
+          </button>
+        </div>
+
+        <input type="hidden" id="cintoChegada">
+
+        <div
+          class="observacao-item"
+          id="boxObs_cintoChegada"
+        >
+          <label>
+            Cinto de segurança — Observação obrigatória
+          </label>
+
+          <textarea
+            id="obs_cintoChegada"
+            placeholder="Descreva a avaria encontrada..."
+          ></textarea>
+        </div>
       </div>
 
     </div>
 
-
-    <!-- OBSERVAÇÃO DA CHEGADA -->
+        <!-- OBSERVAÇÃO GERAL DA CHEGADA -->
     <div class="card">
 
-      <h2>📝 Observação da Chegada</h2>
-
-      <p>
-        Se algum item estiver com avaria, faltante ou diferente da saída,
-        descreva a ocorrência abaixo.
-      </p>
+      <h2>📝 Observação Geral da Chegada</h2>
 
       <label for="observacaoChegada">
         Observação
@@ -1933,7 +2128,7 @@ canvas{
 
       <textarea
         id="observacaoChegada"
-        placeholder="Descreva aqui qualquer ocorrência encontrada na chegada..."
+        placeholder="Digite alguma observação adicional, se necessário..."
       ></textarea>
 
     </div>
@@ -1945,16 +2140,24 @@ canvas{
       <h2>📷 Foto de Avaria — Chegada</h2>
 
       <p>
-        Caso exista alguma avaria na chegada, você pode registrar uma foto.
+        Caso exista alguma avaria, você pode registrar uma foto.
       </p>
 
       <input
         type="file"
         id="fotoAvariaChegada"
+        class="input-foto-oculto"
         accept="image/*"
         capture="environment"
         onchange="mostrarFoto(this,'previewAvariaChegada')"
       >
+
+      <label
+        for="fotoAvariaChegada"
+        class="btn-foto"
+      >
+        📷 FOTO
+      </label>
 
       <img
         id="previewAvariaChegada"
@@ -1963,9 +2166,6 @@ canvas{
       >
 
     </div>
-
-
-    <!-- NÃO EXISTE REGISTRO FACIAL NA CHEGADA -->
 
 
     <!-- ASSINATURA DO CONDUTOR NA CHEGADA -->
@@ -2000,6 +2200,7 @@ canvas{
       class="sucesso"
     ></div>
 
+
     <button
       type="button"
       class="btn btn-verde"
@@ -2011,7 +2212,7 @@ canvas{
   </section>
 
 
-  <!-- ETAPA FINAL -->
+  <!-- TELA FINAL -->
   <section
     id="etapaFinal"
     class="oculto"
@@ -2019,25 +2220,62 @@ canvas{
 
     <div class="card">
 
-      <h2>✅ Checklist Finalizado</h2>
+      <h2>✅ Checklist de Chegada Concluído</h2>
 
-      <div
-        class="status"
-        style="background:#e8f5e9;color:#176b2c;"
-      >
+      <div class="status">
         VIAGEM FINALIZADA COM SUCESSO
       </div>
 
-      <p style="text-align:center;">
-        O checklist de saída e chegada foi concluído.
-      </p>
+      <table class="resumo-final">
+
+        <tr>
+          <th>Veículo</th>
+          <td id="resumoVeiculo">-</td>
+        </tr>
+
+        <tr>
+          <th>Placa</th>
+          <td id="resumoPlaca">-</td>
+        </tr>
+
+        <tr>
+          <th>Condutor</th>
+          <td id="resumoCondutor">-</td>
+        </tr>
+
+        <tr>
+          <th>KM Saída</th>
+          <td id="resumoKmSaida">-</td>
+        </tr>
+
+        <tr>
+          <th>KM Chegada</th>
+          <td id="resumoKmChegada">-</td>
+        </tr>
+
+        <tr>
+          <th>KM Percorrido</th>
+          <td id="resumoKmPercorrido">-</td>
+        </tr>
+
+        <tr>
+          <th>Chegada</th>
+          <td id="resumoDataHoraChegada">-</td>
+        </tr>
+
+      </table>
+
+      <div class="aviso-fechar-app">
+        ✅ CHECKLIST DE CHEGADA CONCLUÍDO.<br>
+        Você já pode baixar o PDF ou fechar o aplicativo.
+      </div>
 
       <button
         type="button"
         class="btn btn-azul"
         onclick="gerarPDF()"
       >
-        📄 BAIXAR RELATÓRIO EM PDF
+        📄 BAIXAR PDF
       </button>
 
       <button
@@ -2059,61 +2297,67 @@ canvas{
 
 </div>
 
+  <script>
 
-<script>
+/* =====================================================
+   DADOS PRINCIPAIS
+===================================================== */
 
 let dadosViagem = {};
 
-let assinaturaSaidaRealizada = false;
-let assinaturaChegadaRealizada = false;
+let assinaturaSaidaFeita = false;
+let assinaturaChegadaFeita = false;
 
-let canvasSaida;
-let ctxSaida;
-
-let canvasChegada;
-let ctxChegada;
-
-let desenhandoSaida = false;
-let desenhandoChegada = false;
+let fotoAvariaSaidaBase64 = "";
+let fotoFacialSaidaBase64 = "";
+let fotoAvariaChegadaBase64 = "";
 
 
-/* =========================================================
+/* =====================================================
    VEÍCULOS
-========================================================= */
+===================================================== */
 
 const veiculos = [
+
   {
     nome: "SANDERO",
     placa: "OFC-4143"
   },
+
   {
     nome: "NISSAN FRONTIER",
     placa: "PWC-1227"
   },
+
   {
     nome: "NISSAN KICKS — SLC-8F20",
     placa: "SLC-8F20"
   },
+
   {
     nome: "NISSAN KICKS — SLC-8F40",
     placa: "SLC-8F40"
   },
+
   {
     nome: "NISSAN KICKS — SLC-8F50",
     placa: "SLC-8F50"
   }
+
 ];
 
 
+/* =====================================================
+   CARREGAR VEÍCULOS
+===================================================== */
+
 function carregarVeiculos(){
 
-  const select =
-    document.getElementById("veiculo");
+  const select = document.getElementById("veiculo");
 
   veiculos.forEach(function(item){
 
-    const option =
-      document.createElement("option");
+    const option = document.createElement("option");
 
     option.value = item.nome;
     option.textContent = item.nome;
@@ -2125,9 +2369,13 @@ function carregarVeiculos(){
 }
 
 
+/* =====================================================
+   PREENCHER PLACA AUTOMATICAMENTE
+===================================================== */
+
 function preencherPlaca(){
 
-  const veiculo =
+  const nomeVeiculo =
     document.getElementById("veiculo").value;
 
   const placa =
@@ -2135,302 +2383,120 @@ function preencherPlaca(){
 
   const encontrado =
     veiculos.find(function(item){
-      return item.nome === veiculo;
+      return item.nome === nomeVeiculo;
     });
 
-  placa.value =
-    encontrado ? encontrado.placa : "";
+  if(encontrado){
 
-}
+    placa.value = encontrado.placa;
 
-  /* =========================================================
-   DATA E HORA
-========================================================= */
+  }else{
 
-function formatarDataHora(data){
+    placa.value = "";
 
-  const dia =
-    String(data.getDate()).padStart(2,"0");
-
-  const mes =
-    String(data.getMonth() + 1).padStart(2,"0");
-
-  const ano =
-    data.getFullYear();
-
-  const hora =
-    String(data.getHours()).padStart(2,"0");
-
-  const minuto =
-    String(data.getMinutes()).padStart(2,"0");
-
-  return (
-    dia + "/" +
-    mes + "/" +
-    ano + " " +
-    hora + ":" +
-    minuto
-  );
-
-}
-
-
-/* =========================================================
-   FOTOS
-   Reduz o tamanho da imagem antes de armazenar.
-   Isso ajuda a manter a foto da saída mesmo após
-   fechar e abrir novamente o aplicativo.
-========================================================= */
-
-function mostrarFoto(input,idPreview){
-
-  const arquivo =
-    input.files && input.files[0];
-
-  if(!arquivo){
-    return;
   }
 
-  const preview =
-    document.getElementById(idPreview);
-
-  const leitor =
-    new FileReader();
-
-  leitor.onload = function(evento){
-
-    const imagem =
-      new Image();
-
-    imagem.onload = function(){
-
-      const tamanhoMaximo = 1000;
-
-      let largura =
-        imagem.width;
-
-      let altura =
-        imagem.height;
-
-      if(
-        largura > tamanhoMaximo ||
-        altura > tamanhoMaximo
-      ){
-
-        if(largura > altura){
-
-          altura =
-            Math.round(
-              altura *
-              tamanhoMaximo /
-              largura
-            );
-
-          largura =
-            tamanhoMaximo;
-
-        }else{
-
-          largura =
-            Math.round(
-              largura *
-              tamanhoMaximo /
-              altura
-            );
-
-          altura =
-            tamanhoMaximo;
-
-        }
-
-      }
-
-      const canvas =
-        document.createElement("canvas");
-
-      canvas.width =
-        largura;
-
-      canvas.height =
-        altura;
-
-      const contexto =
-        canvas.getContext("2d");
-
-      contexto.drawImage(
-        imagem,
-        0,
-        0,
-        largura,
-        altura
-      );
-
-      const fotoReduzida =
-        canvas.toDataURL(
-          "image/jpeg",
-          0.72
-        );
-
-      preview.src =
-        fotoReduzida;
-
-      preview.style.display =
-        "block";
-
-      input.classList.remove(
-        "campo-obrigatorio-erro"
-      );
-
-      const card =
-        input.closest(".card");
-
-      if(card){
-        card.classList.remove(
-          "campo-obrigatorio-erro"
-        );
-      }
-
-    };
-
-    imagem.src =
-      evento.target.result;
-
-  };
-
-  leitor.readAsDataURL(
-    arquivo
-  );
-
 }
 
 
-/* =========================================================
-   DESTAQUE DOS CAMPOS OBRIGATÓRIOS
-========================================================= */
+/* =====================================================
+   CONVERTER KM
+   ACEITA PONTO OU VÍRGULA
+===================================================== */
 
-function limparDestaquesObrigatorios(){
-
-  document
-    .querySelectorAll(
-      ".campo-obrigatorio-erro"
-    )
-    .forEach(function(elemento){
-
-      elemento.classList.remove(
-        "campo-obrigatorio-erro"
-      );
-
-    });
-
-}
-
-
-function destacarCampoObrigatorio(elemento){
-
-  if(!elemento){
-    return;
-  }
-
-  let alvo =
-    elemento;
+function converterKM(valor){
 
   if(
-    elemento.type === "hidden"
+    valor === null ||
+    valor === undefined
   ){
-
-    alvo =
-      elemento.closest(".item-check") ||
-      elemento.parentElement;
-
+    return NaN;
   }
 
-  alvo.classList.add(
-    "campo-obrigatorio-erro"
-  );
+  let texto =
+    String(valor).trim();
 
-  alvo.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
+  if(texto === ""){
+    return NaN;
+  }
 
-  setTimeout(function(){
+  /*
+    Permite:
+    12500
+    12500,5
+    12500.5
+  */
 
-    if(
-      elemento.type !== "hidden" &&
-      typeof elemento.focus === "function"
-    ){
+  texto =
+    texto.replace(",", ".");
 
-      elemento.focus({
-        preventScroll:true
-      });
+  const numero =
+    Number(texto);
 
-    }else{
-
-      const botao =
-        alvo.querySelector("button");
-
-      if(botao){
-        botao.focus({
-          preventScroll:true
-        });
-      }
-
-    }
-
-  },400);
+  return numero;
 
 }
 
 
-function destacarGrupoObrigatorio(idGrupo){
+/* =====================================================
+   MOSTRAR KM
+===================================================== */
 
-  const grupo =
-    document.getElementById(idGrupo);
+function formatarKM(valor){
 
-  if(!grupo){
-    return;
+  const numero =
+    Number(valor);
+
+  if(!Number.isFinite(numero)){
+    return "";
   }
 
-  grupo.classList.add(
-    "campo-obrigatorio-erro"
-  );
-
-  grupo.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
-
-  const botao =
-    grupo.querySelector("button");
-
-  setTimeout(function(){
-
-    if(botao){
-      botao.focus({
-        preventScroll:true
-      });
-    }
-
-  },400);
+  return numero
+    .toString()
+    .replace(".", ",");
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   DATA E HORA
+===================================================== */
+
+function dataHoraAtual(){
+
+  const agora =
+    new Date();
+
+  return agora.toLocaleString(
+    "pt-BR",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
+
+}
+
+
+/* =====================================================
    COMBUSTÍVEL - SAÍDA
-========================================================= */
+===================================================== */
 
 function selecionarCombustivel(
   botao,
   valor
 ){
 
-  const grupo =
+  const area =
     document.getElementById(
       "combustivelSaida"
     );
 
-  grupo
+  area
     .querySelectorAll(".opcao")
     .forEach(function(item){
 
@@ -2448,28 +2514,24 @@ function selecionarCombustivel(
     "nivelCombustivelSaida"
   ).value = valor;
 
-  grupo.classList.remove(
-    "campo-obrigatorio-erro"
-  );
-
 }
 
 
-/* =========================================================
+/* =====================================================
    COMBUSTÍVEL - CHEGADA
-========================================================= */
+===================================================== */
 
 function selecionarCombustivelChegada(
   botao,
   valor
 ){
 
-  const grupo =
+  const area =
     document.getElementById(
       "combustivelChegada"
     );
 
-  grupo
+  area
     .querySelectorAll(".opcao")
     .forEach(function(item){
 
@@ -2487,16 +2549,12 @@ function selecionarCombustivelChegada(
     "nivelCombustivelChegada"
   ).value = valor;
 
-  grupo.classList.remove(
-    "campo-obrigatorio-erro"
-  );
-
 }
 
 
-/* =========================================================
-   MARCAÇÃO DOS ITENS - SAÍDA
-========================================================= */
+/* =====================================================
+   MARCAR ITEM DA SAÍDA
+===================================================== */
 
 function marcarItemSaida(
   botao,
@@ -2506,20 +2564,16 @@ function marcarItemSaida(
 ){
 
   const campo =
-    document.getElementById(
-      idCampo
-    );
+    document.getElementById(idCampo);
 
-  const item =
-    campo.closest(
-      ".item-check"
-    );
+  const grupo =
+    botao.parentElement;
 
-  item
+  grupo
     .querySelectorAll(".opcao")
-    .forEach(function(elemento){
+    .forEach(function(item){
 
-      elemento.classList.remove(
+      item.classList.remove(
         "selecionado"
       );
 
@@ -2529,14 +2583,13 @@ function marcarItemSaida(
     "selecionado"
   );
 
-  campo.value =
-    valor;
+  campo.value = valor;
 
-  item.classList.remove(
+  campo.classList.remove(
     "campo-obrigatorio-erro"
   );
 
-  const boxObservacao =
+  const box =
     document.getElementById(
       "boxObs_" + idCampo
     );
@@ -2546,54 +2599,42 @@ function marcarItemSaida(
       "obs_" + idCampo
     );
 
-  if(
-    valor === "OK"
-  ){
+  if(valor === "OK"){
 
-    boxObservacao.style.display =
-      "none";
-
-    observacao.value =
-      "";
-
-    observacao.classList.remove(
-      "campo-obrigatorio-erro"
-    );
+    box.style.display = "none";
+    observacao.value = "";
 
   }else{
 
-    boxObservacao.style.display =
-      "block";
+    box.style.display = "block";
 
   }
 
 }
 
-  /* =========================================================
-   MARCAÇÃO DOS ITENS - CHEGADA
-========================================================= */
 
-function marcarChegada(
+/* =====================================================
+   MARCAR ITEM DA CHEGADA
+===================================================== */
+
+function marcarItemChegada(
   botao,
   idCampo,
-  valor
+  valor,
+  nomeItem
 ){
 
   const campo =
-    document.getElementById(
-      idCampo
-    );
+    document.getElementById(idCampo);
 
-  const item =
-    campo.closest(
-      ".item-check"
-    );
+  const grupo =
+    botao.parentElement;
 
-  item
+  grupo
     .querySelectorAll(".opcao")
-    .forEach(function(elemento){
+    .forEach(function(item){
 
-      elemento.classList.remove(
+      item.classList.remove(
         "selecionado"
       );
 
@@ -2603,19 +2644,440 @@ function marcarChegada(
     "selecionado"
   );
 
-  campo.value =
-    valor;
+  campo.value = valor;
 
-  item.classList.remove(
+  campo.classList.remove(
     "campo-obrigatorio-erro"
+  );
+
+  const box =
+    document.getElementById(
+      "boxObs_" + idCampo
+    );
+
+  const observacao =
+    document.getElementById(
+      "obs_" + idCampo
+    );
+
+  if(valor === "OK"){
+
+    box.style.display = "none";
+    observacao.value = "";
+
+  }else{
+
+    box.style.display = "block";
+
+  }
+
+}
+
+    /* =====================================================
+   FOTO - COMPACTAR E MOSTRAR
+===================================================== */
+
+function mostrarFoto(input, idPreview){
+
+  if(
+    !input.files ||
+    !input.files[0]
+  ){
+    return;
+  }
+
+  const arquivo = input.files[0];
+  const leitor = new FileReader();
+
+  leitor.onload = function(evento){
+
+    const imagem = new Image();
+
+    imagem.onload = function(){
+
+      const maximo = 1000;
+
+      let largura = imagem.width;
+      let altura = imagem.height;
+
+      if(
+        largura > maximo ||
+        altura > maximo
+      ){
+
+        if(largura > altura){
+
+          altura =
+            Math.round(
+              altura * maximo / largura
+            );
+
+          largura = maximo;
+
+        }else{
+
+          largura =
+            Math.round(
+              largura * maximo / altura
+            );
+
+          altura = maximo;
+
+        }
+
+      }
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width = largura;
+      canvas.height = altura;
+
+      const ctx =
+        canvas.getContext("2d");
+
+      ctx.drawImage(
+        imagem,
+        0,
+        0,
+        largura,
+        altura
+      );
+
+      const fotoCompactada =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.72
+        );
+
+      const preview =
+        document.getElementById(
+          idPreview
+        );
+
+      preview.src = fotoCompactada;
+      preview.style.display = "block";
+
+      if(
+        idPreview ===
+        "previewAvariaSaida"
+      ){
+
+        fotoAvariaSaidaBase64 =
+          fotoCompactada;
+
+      }
+
+      if(
+        idPreview ===
+        "previewFacialSaida"
+      ){
+
+        fotoFacialSaidaBase64 =
+          fotoCompactada;
+
+        document.getElementById(
+          "avisoFotoSaida"
+        ).style.display = "none";
+
+      }
+
+      if(
+        idPreview ===
+        "previewAvariaChegada"
+      ){
+
+        fotoAvariaChegadaBase64 =
+          fotoCompactada;
+
+      }
+
+    };
+
+    imagem.src = evento.target.result;
+
+  };
+
+  leitor.readAsDataURL(arquivo);
+
+}
+
+
+/* =====================================================
+   CONFIGURAR ASSINATURA
+===================================================== */
+
+function configurarCanvas(
+  idCanvas,
+  tipo
+){
+
+  const canvas =
+    document.getElementById(idCanvas);
+
+  if(!canvas){
+    return;
+  }
+
+  const contexto =
+    canvas.getContext("2d");
+
+  function ajustarCanvas(){
+
+    const larguraVisual =
+      canvas.clientWidth;
+
+    const alturaVisual = 180;
+
+    canvas.width = larguraVisual;
+    canvas.height = alturaVisual;
+
+    contexto.lineWidth = 2;
+    contexto.lineCap = "round";
+    contexto.strokeStyle = "#000";
+
+  }
+
+  ajustarCanvas();
+
+  let desenhando = false;
+
+  function posicao(evento){
+
+    const retangulo =
+      canvas.getBoundingClientRect();
+
+    let x;
+    let y;
+
+    if(evento.touches){
+
+      x =
+        evento.touches[0].clientX -
+        retangulo.left;
+
+      y =
+        evento.touches[0].clientY -
+        retangulo.top;
+
+    }else{
+
+      x =
+        evento.clientX -
+        retangulo.left;
+
+      y =
+        evento.clientY -
+        retangulo.top;
+
+    }
+
+    return {x:x,y:y};
+
+  }
+
+  function iniciar(evento){
+
+    evento.preventDefault();
+
+    desenhando = true;
+
+    const p = posicao(evento);
+
+    contexto.beginPath();
+    contexto.moveTo(p.x,p.y);
+
+  }
+
+  function desenhar(evento){
+
+    if(!desenhando){
+      return;
+    }
+
+    evento.preventDefault();
+
+    const p = posicao(evento);
+
+    contexto.lineTo(p.x,p.y);
+    contexto.stroke();
+
+    if(tipo === "saida"){
+
+      assinaturaSaidaFeita = true;
+
+    }else{
+
+      assinaturaChegadaFeita = true;
+
+    }
+
+  }
+
+  function terminar(evento){
+
+    if(evento){
+      evento.preventDefault();
+    }
+
+    desenhando = false;
+    contexto.closePath();
+
+  }
+
+  canvas.addEventListener(
+    "mousedown",
+    iniciar
+  );
+
+  canvas.addEventListener(
+    "mousemove",
+    desenhar
+  );
+
+  window.addEventListener(
+    "mouseup",
+    terminar
+  );
+
+  canvas.addEventListener(
+    "touchstart",
+    iniciar,
+    {passive:false}
+  );
+
+  canvas.addEventListener(
+    "touchmove",
+    desenhar,
+    {passive:false}
+  );
+
+  canvas.addEventListener(
+    "touchend",
+    terminar,
+    {passive:false}
   );
 
 }
 
 
-/* =========================================================
-   LISTA DOS ITENS DO CHECKLIST
-========================================================= */
+/* =====================================================
+   LIMPAR ASSINATURA DA SAÍDA
+===================================================== */
+
+function limparAssinaturaSaida(){
+
+  const canvas =
+    document.getElementById(
+      "assinaturaSaida"
+    );
+
+  const contexto =
+    canvas.getContext("2d");
+
+  contexto.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  assinaturaSaidaFeita = false;
+
+}
+
+
+/* =====================================================
+   LIMPAR ASSINATURA DA CHEGADA
+===================================================== */
+
+function limparAssinaturaChegada(){
+
+  const canvas =
+    document.getElementById(
+      "assinaturaChegada"
+    );
+
+  const contexto =
+    canvas.getContext("2d");
+
+  contexto.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  assinaturaChegadaFeita = false;
+
+}
+
+
+/* =====================================================
+   MOSTRAR ERRO E IR ATÉ O CAMPO
+===================================================== */
+
+function mostrarErro(
+  elemento,
+  mensagem,
+  caixaErro
+){
+
+  caixaErro.textContent = mensagem;
+  caixaErro.style.display = "block";
+
+  if(elemento){
+
+    elemento.classList.add(
+      "campo-obrigatorio-erro"
+    );
+
+    elemento.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+    if(
+      elemento.tagName === "INPUT" ||
+      elemento.tagName === "TEXTAREA" ||
+      elemento.tagName === "SELECT"
+    ){
+
+      setTimeout(function(){
+
+        try{
+          elemento.focus();
+        }catch(e){}
+
+      },400);
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   LIMPAR MARCAÇÃO DE ERRO
+===================================================== */
+
+function limparErroCampo(elemento){
+
+  if(elemento){
+
+    elemento.classList.remove(
+      "campo-obrigatorio-erro"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LISTA DE ITENS DA SAÍDA
+===================================================== */
 
 const itensSaida = [
 
@@ -2638,6 +3100,10 @@ const itensSaida = [
 ];
 
 
+/* =====================================================
+   LISTA DE ITENS DA CHEGADA
+===================================================== */
+
 const itensChegada = [
 
   "pneusDianteirosChegada",
@@ -2659,269 +3125,76 @@ const itensChegada = [
 ];
 
 
-/* =========================================================
-   NOMES DOS ITENS
-========================================================= */
+/* =====================================================
+   PEGAR DADOS DOS ITENS
+===================================================== */
 
-const nomesItens = {
+function obterDadosItens(lista){
 
-  pneusDianteiros:
-    "Pneus dianteiros",
+  const resultado = {};
 
-  pneusTraseiros:
-    "Pneus traseiros",
-
-  parabrisa:
-    "Para-brisa",
-
-  farois:
-    "Faróis dianteiros / Piscas",
-
-  neblina:
-    "Faróis de neblina",
-
-  palhetasDianteiras:
-    "Palhetas dianteiras",
-
-  palhetaTraseira:
-    "Palheta traseira",
-
-  lanternas:
-    "Lanternas / Piscas traseiros",
-
-  extintor:
-    "Extintor de incêndio",
-
-  bancos:
-    "Bancos",
-
-  tapetes:
-    "Tapetes",
-
-  radio:
-    "Rádio / Multimídia",
-
-  arCondicionado:
-    "Ar-condicionado",
-
-  buzina:
-    "Buzina",
-
-  cinto:
-    "Cinto de segurança"
-
-};
-
-
-/* =========================================================
-   LOCALIZAR PRIMEIRO ITEM NÃO PREENCHIDO
-========================================================= */
-
-function primeiroItemSaidaNaoPreenchido(){
-
-  for(
-    let i = 0;
-    i < itensSaida.length;
-    i++
-  ){
+  lista.forEach(function(id){
 
     const campo =
+      document.getElementById(id);
+
+    const observacao =
       document.getElementById(
-        itensSaida[i]
+        "obs_" + id
       );
 
-    if(
-      !campo ||
-      !campo.value
-    ){
-      return campo;
-    }
+    resultado[id] = {
+      status:
+        campo ? campo.value : "",
+      observacao:
+        observacao
+          ? observacao.value.trim()
+          : ""
+    };
 
-  }
+  });
 
-  return null;
+  return resultado;
 
 }
 
 
-function primeiroItemChegadaNaoPreenchido(){
+/* =====================================================
+   VALIDAR ITENS
+===================================================== */
+
+function validarItens(
+  lista,
+  caixaErro
+){
 
   for(
     let i = 0;
-    i < itensChegada.length;
+    i < lista.length;
     i++
   ){
 
-    const campo =
-      document.getElementById(
-        itensChegada[i]
-      );
-
-    if(
-      !campo ||
-      !campo.value
-    ){
-      return campo;
-    }
-
-  }
-
-  return null;
-
-}
-
-
-/* =========================================================
-   VALIDAR CHECKLIST DE SAÍDA
-========================================================= */
-
-function validarChecklistSaida(){
-
-  return (
-    primeiroItemSaidaNaoPreenchido()
-    === null
-  );
-
-}
-
-
-/* =========================================================
-   VALIDAR OBSERVAÇÕES DOS ITENS DA SAÍDA
-========================================================= */
-
-function primeiraObservacaoSaidaPendente(){
-
-  for(
-    let i = 0;
-    i < itensSaida.length;
-    i++
-  ){
-
-    const id =
-      itensSaida[i];
+    const id = lista[i];
 
     const campo =
       document.getElementById(id);
 
     if(
-      campo &&
-      campo.value &&
-      campo.value !== "OK"
+      !campo ||
+      campo.value === ""
     ){
 
-      const observacao =
-        document.getElementById(
-          "obs_" + id
-        );
+      mostrarErro(
+        campo,
+        "Marque todos os itens do checklist.",
+        caixaErro
+      );
 
-      if(
-        observacao &&
-        !observacao.value.trim()
-      ){
-
-        return observacao;
-
-      }
+      return false;
 
     }
 
-  }
-
-  return null;
-
-}
-
-
-function validarObservacoesItensSaida(){
-
-  const pendentes = [];
-
-  itensSaida.forEach(
-    function(id){
-
-      const campo =
-        document.getElementById(id);
-
-      if(
-        campo &&
-        campo.value &&
-        campo.value !== "OK"
-      ){
-
-        const observacao =
-          document.getElementById(
-            "obs_" + id
-          );
-
-        if(
-          !observacao ||
-          !observacao.value.trim()
-        ){
-
-          pendentes.push(id);
-
-        }
-
-      }
-
-    }
-  );
-
-  return pendentes;
-
-}
-
-
-/* =========================================================
-   MONTAR CHECKLIST DE SAÍDA
-========================================================= */
-
-function montarChecklistSaida(){
-
-  const resultado = {};
-
-  itensSaida.forEach(
-    function(id){
-
-      const chave =
-        id.replace(
-          "Saida",
-          ""
-        );
-
-      const campo =
-        document.getElementById(id);
-
-      resultado[chave] =
-        campo ? campo.value : "";
-
-    }
-  );
-
-  return resultado;
-
-}
-
-
-/* =========================================================
-   MONTAR OBSERVAÇÕES DOS ITENS DA SAÍDA
-========================================================= */
-
-function montarObservacoesItensSaida(){
-
-  const resultado = {};
-
-  itensSaida.forEach(
-    function(id){
-
-      const chave =
-        id.replace(
-          "Saida",
-          ""
-        );
-
-      const campo =
-        document.getElementById(id);
+    if(campo.value !== "OK"){
 
       const observacao =
         document.getElementById(
@@ -2929,816 +3202,248 @@ function montarObservacoesItensSaida(){
         );
 
       if(
-        campo &&
-        campo.value &&
-        campo.value !== "OK"
+        !observacao ||
+        observacao.value.trim() === ""
       ){
 
-        resultado[chave] =
-          observacao
-            ? observacao.value.trim()
-            : "";
-
-      }
-
-    }
-  );
-
-  return resultado;
-
-}
-
-  /* =========================================================
-   VALIDAR CHECKLIST DE CHEGADA
-========================================================= */
-
-function validarChecklistChegada(){
-
-  return (
-    primeiroItemChegadaNaoPreenchido()
-    === null
-  );
-
-}
-
-
-/* =========================================================
-   MONTAR CHECKLIST DE CHEGADA
-========================================================= */
-
-function montarChecklistChegada(){
-
-  const resultado = {};
-
-  itensChegada.forEach(
-    function(id){
-
-      const chave =
-        id.replace(
-          "Chegada",
-          ""
+        mostrarErro(
+          observacao,
+          "Descreva a observação do item marcado com avaria ou faltante.",
+          caixaErro
         );
 
-      const campo =
-        document.getElementById(id);
-
-      resultado[chave] =
-        campo ? campo.value : "";
-
-    }
-  );
-
-  return resultado;
-
-}
-
-
-/* =========================================================
-   VERIFICAR DIVERGÊNCIAS NA CHEGADA
-========================================================= */
-
-function verificarDivergencias(){
-
-  const divergencias = [];
-
-  const checklistSaida =
-    dadosViagem.checklistSaida || {};
-
-  const checklistChegada =
-    montarChecklistChegada();
-
-  Object.keys(
-    checklistChegada
-  ).forEach(
-    function(chave){
-
-      const valorSaida =
-        checklistSaida[chave] || "";
-
-      const valorChegada =
-        checklistChegada[chave] || "";
-
-      if(
-        valorChegada !== "OK" ||
-        (
-          valorSaida &&
-          valorChegada !== valorSaida
-        )
-      ){
-
-        divergencias.push({
-          item:
-            nomesItens[chave] || chave,
-          saida:
-            valorSaida,
-          chegada:
-            valorChegada
-        });
+        return false;
 
       }
 
     }
-  );
-
-  return divergencias;
-
-}
-
-
-/* =========================================================
-   ASSINATURA - SAÍDA
-========================================================= */
-
-function prepararAssinaturaSaida(){
-
-  canvasSaida =
-    document.getElementById(
-      "assinaturaSaida"
-    );
-
-  if(!canvasSaida){
-    return;
-  }
-
-  ajustarCanvas(
-    canvasSaida,
-    "saida"
-  );
-
-  ctxSaida =
-    canvasSaida.getContext("2d");
-
-  configurarContexto(
-    ctxSaida
-  );
-
-  adicionarEventosAssinatura(
-    canvasSaida,
-    "saida"
-  );
-
-}
-
-
-function limparAssinaturaSaida(){
-
-  if(
-    !canvasSaida ||
-    !ctxSaida
-  ){
-    return;
-  }
-
-  ctxSaida.clearRect(
-    0,
-    0,
-    canvasSaida.width,
-    canvasSaida.height
-  );
-
-  assinaturaSaidaRealizada =
-    false;
-
-  canvasSaida.classList.remove(
-    "campo-obrigatorio-erro"
-  );
-
-}
-
-
-/* =========================================================
-   ASSINATURA - CHEGADA
-========================================================= */
-
-function prepararAssinaturaChegada(){
-
-  canvasChegada =
-    document.getElementById(
-      "assinaturaChegada"
-    );
-
-  if(!canvasChegada){
-    return;
-  }
-
-  ajustarCanvas(
-    canvasChegada,
-    "chegada"
-  );
-
-  ctxChegada =
-    canvasChegada.getContext("2d");
-
-  configurarContexto(
-    ctxChegada
-  );
-
-  adicionarEventosAssinatura(
-    canvasChegada,
-    "chegada"
-  );
-
-}
-
-
-function limparAssinaturaChegada(){
-
-  if(
-    !canvasChegada ||
-    !ctxChegada
-  ){
-    return;
-  }
-
-  ctxChegada.clearRect(
-    0,
-    0,
-    canvasChegada.width,
-    canvasChegada.height
-  );
-
-  assinaturaChegadaRealizada =
-    false;
-
-  canvasChegada.classList.remove(
-    "campo-obrigatorio-erro"
-  );
-
-}
-
-
-/* =========================================================
-   CONFIGURAÇÃO DOS CANVAS DE ASSINATURA
-========================================================= */
-
-function ajustarCanvas(
-  canvas,
-  tipo
-){
-
-  const largura =
-    canvas.clientWidth || 500;
-
-  canvas.width =
-    largura;
-
-  canvas.height =
-    180;
-
-}
-
-
-function configurarContexto(ctx){
-
-  if(!ctx){
-    return;
-  }
-
-  ctx.lineWidth =
-    2.5;
-
-  ctx.lineCap =
-    "round";
-
-  ctx.lineJoin =
-    "round";
-
-  ctx.strokeStyle =
-    "#111111";
-
-}
-
-
-/* =========================================================
-   EVENTOS DA ASSINATURA
-========================================================= */
-
-function adicionarEventosAssinatura(
-  canvas,
-  tipo
-){
-
-  canvas.addEventListener(
-    "pointerdown",
-    function(evento){
-
-      evento.preventDefault();
-
-      canvas.setPointerCapture(
-        evento.pointerId
-      );
-
-      iniciarDesenho(
-        evento,
-        canvas,
-        tipo
-      );
-
-    }
-  );
-
-
-  canvas.addEventListener(
-    "pointermove",
-    function(evento){
-
-      evento.preventDefault();
-
-      desenharAssinatura(
-        evento,
-        canvas,
-        tipo
-      );
-
-    }
-  );
-
-
-  canvas.addEventListener(
-    "pointerup",
-    function(evento){
-
-      evento.preventDefault();
-
-      finalizarDesenho(
-        tipo
-      );
-
-    }
-  );
-
-
-  canvas.addEventListener(
-    "pointercancel",
-    function(){
-
-      finalizarDesenho(
-        tipo
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   FUNÇÕES DE DESENHO
-========================================================= */
-
-function obterPosicao(
-  evento,
-  canvas
-){
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-  const escalaX =
-    canvas.width /
-    rect.width;
-
-  const escalaY =
-    canvas.height /
-    rect.height;
-
-  return {
-
-    x:
-      (evento.clientX - rect.left) *
-      escalaX,
-
-    y:
-      (evento.clientY - rect.top) *
-      escalaY
-
-  };
-
-}
-
-
-function iniciarDesenho(
-  evento,
-  canvas,
-  tipo
-){
-
-  const posicao =
-    obterPosicao(
-      evento,
-      canvas
-    );
-
-  if(tipo === "saida"){
-
-    desenhandoSaida =
-      true;
-
-    assinaturaSaidaRealizada =
-      true;
-
-    ctxSaida.beginPath();
-
-    ctxSaida.moveTo(
-      posicao.x,
-      posicao.y
-    );
-
-    canvasSaida.classList.remove(
-      "campo-obrigatorio-erro"
-    );
-
-  }else{
-
-    desenhandoChegada =
-      true;
-
-    assinaturaChegadaRealizada =
-      true;
-
-    ctxChegada.beginPath();
-
-    ctxChegada.moveTo(
-      posicao.x,
-      posicao.y
-    );
-
-    canvasChegada.classList.remove(
-      "campo-obrigatorio-erro"
-    );
 
   }
 
-}
-
-  /* =========================================================
-   CONTINUAR DESENHO DA ASSINATURA
-========================================================= */
-
-function desenharAssinatura(
-  evento,
-  canvas,
-  tipo
-){
-
-  if(
-    tipo === "saida" &&
-    !desenhandoSaida
-  ){
-    return;
-  }
-
-  if(
-    tipo === "chegada" &&
-    !desenhandoChegada
-  ){
-    return;
-  }
-
-  const posicao =
-    obterPosicao(
-      evento,
-      canvas
-    );
-
-  if(tipo === "saida"){
-
-    ctxSaida.lineTo(
-      posicao.x,
-      posicao.y
-    );
-
-    ctxSaida.stroke();
-
-  }else{
-
-    ctxChegada.lineTo(
-      posicao.x,
-      posicao.y
-    );
-
-    ctxChegada.stroke();
-
-  }
+  return true;
 
 }
 
-
-function finalizarDesenho(tipo){
-
-  if(tipo === "saida"){
-
-    desenhandoSaida =
-      false;
-
-  }else{
-
-    desenhandoChegada =
-      false;
-
-  }
-
-}
-
-
-/* =========================================================
-   MENSAGEM DE ERRO - SAÍDA
-========================================================= */
-
-function mostrarErroSaida(
-  mensagem,
-  elemento
-){
-
-  const erro =
-    document.getElementById(
-      "erroSaida"
-    );
-
-  const sucesso =
-    document.getElementById(
-      "sucessoSaida"
-    );
-
-  sucesso.style.display =
-    "none";
-
-  erro.textContent =
-    mensagem;
-
-  erro.style.display =
-    "block";
-
-  if(elemento){
-
-    destacarCampoObrigatorio(
-      elemento
-    );
-
-  }else{
-
-    erro.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
-
-  }
-
-}
-
-
-/* =========================================================
+    /* =====================================================
    REGISTRAR SAÍDA
-========================================================= */
+===================================================== */
 
 function registrarSaida(){
 
-  limparDestaquesObrigatorios();
+  const caixaErro =
+    document.getElementById("erroSaida");
 
-  const erro =
-    document.getElementById(
-      "erroSaida"
-    );
+  const caixaSucesso =
+    document.getElementById("sucessoSaida");
 
-  const sucesso =
-    document.getElementById(
-      "sucessoSaida"
-    );
-
-  erro.style.display =
-    "none";
-
-  sucesso.style.display =
-    "none";
+  caixaErro.style.display = "none";
+  caixaSucesso.style.display = "none";
 
 
   const veiculo =
-    document.getElementById(
-      "veiculo"
-    );
+    document.getElementById("veiculo");
 
-  if(!veiculo.value){
-
-    mostrarErroSaida(
-      "Selecione o veículo.",
-      veiculo
-    );
-
-    return;
-
-  }
-
+  const placa =
+    document.getElementById("placa");
 
   const condutor =
-    document.getElementById(
-      "condutor"
-    );
-
-  if(!condutor.value.trim()){
-
-    mostrarErroSaida(
-      "Digite o nome do condutor.",
-      condutor
-    );
-
-    return;
-
-  }
-
+    document.getElementById("condutor");
 
   const kmSaida =
-    document.getElementById(
-      "kmSaida"
-    );
-
-  if(
-    kmSaida.value === "" ||
-    !Number.isFinite(
-      Number(kmSaida.value)
-    ) ||
-    Number(kmSaida.value) < 0
-  ){
-
-    mostrarErroSaida(
-      "Informe corretamente o KM de saída.",
-      kmSaida
-    );
-
-    return;
-
-  }
-
+    document.getElementById("kmSaida");
 
   const combustivel =
     document.getElementById(
       "nivelCombustivelSaida"
     );
 
-  if(!combustivel.value){
 
-    mostrarErroSaida(
-      "Selecione o nível de combustível."
-    );
-
-    destacarGrupoObrigatorio(
-      "combustivelSaida"
-    );
-
-    return;
-
-  }
+  limparErroCampo(veiculo);
+  limparErroCampo(condutor);
+  limparErroCampo(kmSaida);
 
 
-  const itemPendente =
-    primeiroItemSaidaNaoPreenchido();
+  if(veiculo.value === ""){
 
-  if(itemPendente){
-
-    mostrarErroSaida(
-      "Preencha todos os itens do checklist de saída.",
-      itemPendente
+    mostrarErro(
+      veiculo,
+      "Selecione o veículo.",
+      caixaErro
     );
 
     return;
-
   }
 
 
-  const observacaoPendente =
-    primeiraObservacaoSaidaPendente();
+  if(condutor.value.trim() === ""){
 
-  if(observacaoPendente){
-
-    mostrarErroSaida(
-      "Descreva a observação do item marcado com avaria ou faltante.",
-      observacaoPendente
+    mostrarErro(
+      condutor,
+      "Informe o nome do condutor.",
+      caixaErro
     );
 
     return;
-
   }
 
 
-  const fotoFacialSaida =
-    document.getElementById(
-      "fotoFacialSaida"
-    );
+  const valorKmSaida =
+    converterKM(kmSaida.value);
 
-  const previewFacialSaida =
-    document.getElementById(
-      "previewFacialSaida"
-    );
 
   if(
-    !fotoFacialSaida.files ||
-    !fotoFacialSaida.files[0] ||
-    !previewFacialSaida.src
+    !Number.isFinite(valorKmSaida) ||
+    valorKmSaida < 0
+  ){
+
+    mostrarErro(
+      kmSaida,
+      "Informe corretamente o KM de saída. Você pode usar ponto ou vírgula.",
+      caixaErro
+    );
+
+    return;
+  }
+
+
+  if(combustivel.value === ""){
+
+    mostrarErro(
+      document.getElementById(
+        "combustivelSaida"
+      ),
+      "Informe o nível de combustível na saída.",
+      caixaErro
+    );
+
+    return;
+  }
+
+
+  if(
+    !validarItens(
+      itensSaida,
+      caixaErro
+    )
+  ){
+    return;
+  }
+
+
+  if(
+    !fotoFacialSaidaBase64
   ){
 
     document.getElementById(
       "avisoFotoSaida"
-    ).style.display =
-      "block";
+    ).style.display = "block";
 
-    mostrarErroSaida(
-      "Faça o registro facial do condutor na saída.",
-      fotoFacialSaida
+    mostrarErro(
+      document.querySelector(
+        'label[for="fotoFacialSaida"]'
+      ),
+      "Faça o registro facial antes de registrar a saída.",
+      caixaErro
     );
 
     return;
-
   }
 
 
-  document.getElementById(
-    "avisoFotoSaida"
-  ).style.display =
-    "none";
+  if(!assinaturaSaidaFeita){
 
-
-  if(!assinaturaSaidaRealizada){
-
-    mostrarErroSaida(
-      "Faça a assinatura do condutor na saída.",
-      canvasSaida
+    mostrarErro(
+      document.getElementById(
+        "assinaturaSaida"
+      ),
+      "Faça a assinatura do condutor antes de registrar a saída.",
+      caixaErro
     );
 
     return;
-
   }
 
 
-  const previewAvariaSaida =
+  const dataHoraSaida =
     document.getElementById(
-      "previewAvariaSaida"
+      "dataHoraSaida"
+    ).value || dataHoraAtual();
+
+
+  const canvasAssinatura =
+    document.getElementById(
+      "assinaturaSaida"
     );
 
 
   dadosViagem = {
 
-    status:
-      "EM ANDAMENTO",
+    status:"EM ANDAMENTO",
 
     veiculo:
       veiculo.value,
 
     placa:
-      document.getElementById(
-        "placa"
-      ).value,
+      placa.value,
 
     condutor:
       condutor.value.trim(),
 
     dataHoraSaida:
-      document.getElementById(
-        "dataHoraSaida"
-      ).value,
+      dataHoraSaida,
 
     kmSaida:
-      Number(kmSaida.value),
+      valorKmSaida,
 
     combustivelSaida:
       combustivel.value,
+
+    itensSaida:
+      obterDadosItens(itensSaida),
 
     observacaoSaida:
       document.getElementById(
         "observacaoSaida"
       ).value.trim(),
 
-    checklistSaida:
-      montarChecklistSaida(),
-
-    observacoesItensSaida:
-      montarObservacoesItensSaida(),
-
-    assinaturaSaida:
-      canvasSaida.toDataURL(
-        "image/png"
-      ),
+    fotoAvariaSaida:
+      fotoAvariaSaidaBase64,
 
     fotoFacialSaida:
-      previewFacialSaida.src || "",
+      fotoFacialSaidaBase64,
 
-    fotoAvariaSaida:
-      previewAvariaSaida.src || ""
+    assinaturaSaida:
+      canvasAssinatura.toDataURL(
+        "image/png"
+      )
 
   };
 
+
+  /*
+    SALVA A VIAGEM NO CELULAR.
+    ASSIM ELA CONTINUA DISPONÍVEL
+    MESMO SE O APP FOR FECHADO.
+  */
 
   try{
 
     localStorage.setItem(
       "checklistVeiculoEmAndamento",
-      JSON.stringify(
-        dadosViagem
-      )
+      JSON.stringify(dadosViagem)
     );
 
-  }catch(erroArmazenamento){
+  }catch(erro){
 
-    mostrarErroSaida(
-      "Não foi possível salvar a viagem no aparelho. Tente novamente."
+    console.error(
+      "Erro ao salvar viagem:",
+      erro
+    );
+
+    mostrarErro(
+      null,
+      "Não foi possível salvar a viagem neste aparelho. Tente novamente.",
+      caixaErro
     );
 
     return;
@@ -3746,55 +3451,47 @@ function registrarSaida(){
   }
 
 
-  sucesso.textContent =
-    "✅ SAÍDA REGISTRADA — VIAGEM EM ANDAMENTO. Você já pode fechar o aplicativo.";
+  caixaSucesso.textContent =
+    "✅ Saída registrada com sucesso. Viagem em andamento.";
 
-  sucesso.style.display =
+  caixaSucesso.style.display =
     "block";
 
 
-  document.getElementById(
-    "statusAplicativo"
-  ).textContent =
-    "🔵 VIAGEM EM ANDAMENTO";
+  setTimeout(function(){
 
+    abrirEtapaChegada();
 
-  setTimeout(
-    abrirEtapaChegada,
-    700
-  );
+  },500);
 
 }
 
-  /* =========================================================
-   ABRIR ETAPA DE CHEGADA
-========================================================= */
+
+/* =====================================================
+   ABRIR ETAPA DA CHEGADA
+===================================================== */
 
 function abrirEtapaChegada(){
 
   document.getElementById(
     "etapaSaida"
-  ).classList.add(
-    "oculto"
-  );
+  ).classList.add("oculto");
+
 
   document.getElementById(
     "etapaFinal"
-  ).classList.add(
-    "oculto"
-  );
+  ).classList.add("oculto");
+
 
   document.getElementById(
     "etapaChegada"
-  ).classList.remove(
-    "oculto"
-  );
+  ).classList.remove("oculto");
 
 
   document.getElementById(
     "statusAplicativo"
   ).textContent =
-    "🔵 VIAGEM EM ANDAMENTO — REGISTRAR CHEGADA";
+    "🟡 VIAGEM EM ANDAMENTO — REGISTRAR CHEGADA";
 
 
   document.getElementById(
@@ -3824,25 +3521,19 @@ function abrirEtapaChegada(){
   document.getElementById(
     "kmSaidaChegada"
   ).value =
-    dadosViagem.kmSaida ?? "";
+    formatarKM(
+      dadosViagem.kmSaida
+    );
 
 
   document.getElementById(
     "dataHoraChegada"
-  ).value =
-    formatarDataHora(
-      new Date()
-    );
+  ).value = "";
 
 
-  setTimeout(
-    function(){
-
-      prepararAssinaturaChegada();
-
-    },
-    150
-  );
+  document.getElementById(
+    "kmPercorrido"
+  ).value = "";
 
 
   window.scrollTo({
@@ -3853,166 +3544,154 @@ function abrirEtapaChegada(){
 }
 
 
-/* =========================================================
-   RECUPERAR VIAGEM AO REABRIR O APLICATIVO
-========================================================= */
+/* =====================================================
+   CALCULAR KM DA CHEGADA
+===================================================== */
 
-function recuperarViagem(){
+function atualizarKmChegada(){
 
-  const viagemSalva =
+  const campoKmChegada =
+    document.getElementById(
+      "kmChegada"
+    );
+
+  const campoKmPercorrido =
+    document.getElementById(
+      "kmPercorrido"
+    );
+
+  const campoHora =
+    document.getElementById(
+      "dataHoraChegada"
+    );
+
+
+  const valorChegada =
+    converterKM(
+      campoKmChegada.value
+    );
+
+
+  const valorSaida =
+    Number(
+      dadosViagem.kmSaida
+    );
+
+
+  if(
+    !Number.isFinite(valorChegada) ||
+    !Number.isFinite(valorSaida)
+  ){
+
+    campoKmPercorrido.value = "";
+    return;
+
+  }
+
+
+  if(valorChegada < valorSaida){
+
+    campoKmPercorrido.value = "";
+    return;
+
+  }
+
+
+  const percorrido =
+    valorChegada - valorSaida;
+
+
+  campoKmPercorrido.value =
+    formatarKM(percorrido);
+
+
+  if(campoHora.value === ""){
+
+    campoHora.value =
+      dataHoraAtual();
+
+  }
+
+}
+
+
+/* =====================================================
+   RESTAURAR VIAGEM EM ANDAMENTO
+===================================================== */
+
+function restaurarViagem(){
+
+  const salva =
     localStorage.getItem(
       "checklistVeiculoEmAndamento"
     );
 
-  if(!viagemSalva){
-    return;
+
+  if(!salva){
+    return false;
   }
 
 
   try{
 
-    const recuperada =
-      JSON.parse(
-        viagemSalva
-      );
+    const dados =
+      JSON.parse(salva);
 
 
     if(
-      recuperada &&
-      recuperada.status ===
-        "EM ANDAMENTO"
+      !dados ||
+      dados.status !== "EM ANDAMENTO"
     ){
-
-      dadosViagem =
-        recuperada;
-
-      abrirEtapaChegada();
-
+      return false;
     }
+
+
+    dadosViagem = dados;
+
+
+    fotoAvariaSaidaBase64 =
+      dadosViagem.fotoAvariaSaida || "";
+
+
+    fotoFacialSaidaBase64 =
+      dadosViagem.fotoFacialSaida || "";
+
+
+    abrirEtapaChegada();
+
+    return true;
 
   }catch(erro){
 
     console.error(
-      "Erro ao recuperar viagem:",
+      "Erro ao restaurar viagem:",
       erro
     );
 
-  }
-
-}
-
-
-/* =========================================================
-   MENSAGEM DE ERRO - CHEGADA
-========================================================= */
-
-function mostrarErroChegada(
-  mensagem,
-  elemento
-){
-
-  const erro =
-    document.getElementById(
-      "erroChegada"
-    );
-
-  const sucesso =
-    document.getElementById(
-      "sucessoChegada"
-    );
-
-  sucesso.style.display =
-    "none";
-
-  erro.textContent =
-    mensagem;
-
-  erro.style.display =
-    "block";
-
-
-  if(elemento){
-
-    destacarCampoObrigatorio(
-      elemento
-    );
-
-  }else{
-
-    erro.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
+    return false;
 
   }
 
 }
 
-
-/* =========================================================
+    /* =====================================================
    FINALIZAR CHEGADA
-========================================================= */
+===================================================== */
 
 function finalizarChegada(){
 
-  limparDestaquesObrigatorios();
+  const caixaErro =
+    document.getElementById("erroChegada");
 
+  const caixaSucesso =
+    document.getElementById("sucessoChegada");
 
-  const erro =
-    document.getElementById(
-      "erroChegada"
-    );
-
-  const sucesso =
-    document.getElementById(
-      "sucessoChegada"
-    );
-
-  erro.style.display =
-    "none";
-
-  sucesso.style.display =
-    "none";
+  caixaErro.style.display = "none";
+  caixaSucesso.style.display = "none";
 
 
   const kmChegada =
-    document.getElementById(
-      "kmChegada"
-    );
-
-
-  if(
-    kmChegada.value === "" ||
-    !Number.isFinite(
-      Number(kmChegada.value)
-    ) ||
-    Number(kmChegada.value) < 0
-  ){
-
-    mostrarErroChegada(
-      "Informe corretamente o KM de chegada.",
-      kmChegada
-    );
-
-    return;
-
-  }
-
-
-  if(
-    Number(kmChegada.value) <
-    Number(dadosViagem.kmSaida)
-  ){
-
-    mostrarErroChegada(
-      "O KM de chegada não pode ser menor que o KM de saída.",
-      kmChegada
-    );
-
-    return;
-
-  }
-
+    document.getElementById("kmChegada");
 
   const combustivelChegada =
     document.getElementById(
@@ -4020,86 +3699,97 @@ function finalizarChegada(){
     );
 
 
-  if(!combustivelChegada.value){
-
-    mostrarErroChegada(
-      "Selecione o nível de combustível na chegada."
-    );
-
-    destacarGrupoObrigatorio(
-      "combustivelChegada"
-    );
-
-    return;
-
-  }
+  limparErroCampo(kmChegada);
 
 
-  const itemPendente =
-    primeiroItemChegadaNaoPreenchido();
-
-
-  if(itemPendente){
-
-    mostrarErroChegada(
-      "Preencha todos os itens do checklist de chegada.",
-      itemPendente
-    );
-
-    return;
-
-  }
-
-
-  const checklistChegada =
-    montarChecklistChegada();
-
-
-  const divergencias =
-    verificarDivergencias();
-
-
-  const observacaoChegada =
-    document.getElementById(
-      "observacaoChegada"
-    );
+  const valorKmChegada =
+    converterKM(kmChegada.value);
 
 
   if(
-    divergencias.length > 0 &&
-    !observacaoChegada.value.trim()
+    !Number.isFinite(valorKmChegada) ||
+    valorKmChegada < 0
   ){
 
-    mostrarErroChegada(
-      "Existe item com avaria, faltante ou divergência. Preencha a observação da chegada.",
-      observacaoChegada
+    mostrarErro(
+      kmChegada,
+      "Informe corretamente o KM de chegada. Você pode usar ponto ou vírgula.",
+      caixaErro
     );
 
     return;
-
   }
 
 
-  /*
-    IMPORTANTE:
-    Não existe validação de foto facial
-    na chegada.
-
-    O registro facial obrigatório ocorre
-    somente na saída.
-  */
+  const valorKmSaida =
+    Number(dadosViagem.kmSaida);
 
 
-  if(!assinaturaChegadaRealizada){
+  if(valorKmChegada < valorKmSaida){
 
-    mostrarErroChegada(
-      "Faça a assinatura do condutor na chegada.",
-      canvasChegada
+    mostrarErro(
+      kmChegada,
+      "O KM de chegada não pode ser menor que o KM de saída.",
+      caixaErro
     );
 
     return;
-
   }
+
+
+  if(combustivelChegada.value === ""){
+
+    mostrarErro(
+      document.getElementById(
+        "combustivelChegada"
+      ),
+      "Informe o nível de combustível na chegada.",
+      caixaErro
+    );
+
+    return;
+  }
+
+
+  if(
+    !validarItens(
+      itensChegada,
+      caixaErro
+    )
+  ){
+    return;
+  }
+
+
+  if(!assinaturaChegadaFeita){
+
+    mostrarErro(
+      document.getElementById(
+        "assinaturaChegada"
+      ),
+      "Faça a assinatura do condutor antes de finalizar a chegada.",
+      caixaErro
+    );
+
+    return;
+  }
+
+
+  const dataHoraChegada =
+    document.getElementById(
+      "dataHoraChegada"
+    ).value || dataHoraAtual();
+
+
+  const kmPercorrido =
+    valorKmChegada -
+    valorKmSaida;
+
+
+  const canvasAssinatura =
+    document.getElementById(
+      "assinaturaChegada"
+    );
 
 
   dadosViagem.status =
@@ -4107,81 +3797,77 @@ function finalizarChegada(){
 
 
   dadosViagem.dataHoraChegada =
-    formatarDataHora(
-      new Date()
-    );
+    dataHoraChegada;
 
 
   dadosViagem.kmChegada =
-    Number(
-      kmChegada.value
-    );
+    valorKmChegada;
 
 
   dadosViagem.kmPercorrido =
-    dadosViagem.kmChegada -
-    Number(
-      dadosViagem.kmSaida
-    );
+    kmPercorrido;
 
 
   dadosViagem.combustivelChegada =
     combustivelChegada.value;
 
 
+  dadosViagem.itensChegada =
+    obterDadosItens(
+      itensChegada
+    );
+
+
   dadosViagem.observacaoChegada =
-    observacaoChegada.value.trim();
+    document.getElementById(
+      "observacaoChegada"
+    ).value.trim();
 
 
-  dadosViagem.checklistChegada =
-    checklistChegada;
-
-
-  dadosViagem.divergencias =
-    divergencias;
+  dadosViagem.fotoAvariaChegada =
+    fotoAvariaChegadaBase64;
 
 
   dadosViagem.assinaturaChegada =
-    canvasChegada.toDataURL(
+    canvasAssinatura.toDataURL(
       "image/png"
     );
 
 
   /*
-    A foto facial da saída já está
-    preservada em dadosViagem.
-
-    Não criamos foto facial de chegada.
+    A CHEGADA FOI CONCLUÍDA.
+    REMOVE A VIAGEM EM ANDAMENTO.
   */
-
-
-  const previewAvariaChegada =
-    document.getElementById(
-      "previewAvariaChegada"
-    );
-
-
-  dadosViagem.fotoAvariaChegada =
-    previewAvariaChegada.src || "";
-
 
   localStorage.removeItem(
     "checklistVeiculoEmAndamento"
   );
 
 
+  mostrarResumoFinal();
+
+}
+
+
+/* =====================================================
+   MOSTRAR RESUMO FINAL
+===================================================== */
+
+function mostrarResumoFinal(){
+
+  document.getElementById(
+    "etapaSaida"
+  ).classList.add("oculto");
+
+
   document.getElementById(
     "etapaChegada"
-  ).classList.add(
-    "oculto"
-  );
+  ).classList.add("oculto");
 
 
   document.getElementById(
     "etapaFinal"
-  ).classList.remove(
-    "oculto"
-  );
+  ).classList.remove("oculto");
 
 
   document.getElementById(
@@ -4190,6 +3876,54 @@ function finalizarChegada(){
     "✅ VIAGEM FINALIZADA";
 
 
+  document.getElementById(
+    "resumoVeiculo"
+  ).textContent =
+    dadosViagem.veiculo || "-";
+
+
+  document.getElementById(
+    "resumoPlaca"
+  ).textContent =
+    dadosViagem.placa || "-";
+
+
+  document.getElementById(
+    "resumoCondutor"
+  ).textContent =
+    dadosViagem.condutor || "-";
+
+
+  document.getElementById(
+    "resumoKmSaida"
+  ).textContent =
+    formatarKM(
+      dadosViagem.kmSaida
+    );
+
+
+  document.getElementById(
+    "resumoKmChegada"
+  ).textContent =
+    formatarKM(
+      dadosViagem.kmChegada
+    );
+
+
+  document.getElementById(
+    "resumoKmPercorrido"
+  ).textContent =
+    formatarKM(
+      dadosViagem.kmPercorrido
+    );
+
+
+  document.getElementById(
+    "resumoDataHoraChegada"
+  ).textContent =
+    dadosViagem.dataHoraChegada || "-";
+
+
   window.scrollTo({
     top:0,
     behavior:"smooth"
@@ -4197,597 +3931,10 @@ function finalizarChegada(){
 
 }
 
-  /* =========================================================
-   NOMES PARA O RELATÓRIO
-========================================================= */
 
-function nomeItemRelatorio(chave){
-
-  return (
-    nomesItens[chave] ||
-    chave
-  );
-
-}
-
-
-/* =========================================================
-   TEXTO SEGURO PARA O PDF
-========================================================= */
-
-function escaparHTML(valor){
-
-  if(
-    valor === null ||
-    valor === undefined
-  ){
-    return "";
-  }
-
-  return String(valor)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   LINHAS DO CHECKLIST PARA O PDF
-========================================================= */
-
-function gerarLinhasChecklistPDF(){
-
-  const saida =
-    dadosViagem.checklistSaida || {};
-
-  const chegada =
-    dadosViagem.checklistChegada || {};
-
-  const observacoes =
-    dadosViagem.observacoesItensSaida || {};
-
-  let linhas = "";
-
-
-  Object.keys(
-    nomesItens
-  ).forEach(
-    function(chave){
-
-      const valorSaida =
-        saida[chave] || "-";
-
-      const valorChegada =
-        chegada[chave] || "-";
-
-      const observacao =
-        observacoes[chave] || "";
-
-
-      linhas +=
-        "<tr>" +
-
-          "<td>" +
-            escaparHTML(
-              nomeItemRelatorio(chave)
-            ) +
-          "</td>" +
-
-          "<td>" +
-            escaparHTML(
-              valorSaida
-            ) +
-          "</td>" +
-
-          "<td>" +
-            escaparHTML(
-              valorChegada
-            ) +
-          "</td>" +
-
-          "<td>" +
-            escaparHTML(
-              observacao
-            ) +
-          "</td>" +
-
-        "</tr>";
-
-    }
-  );
-
-
-  return linhas;
-
-}
-
-
-/* =========================================================
-   IMAGENS DO RELATÓRIO
-========================================================= */
-
-function blocoImagemPDF(
-  titulo,
-  imagem
-){
-
-  if(!imagem){
-    return "";
-  }
-
-
-  return (
-
-    '<div class="foto-box">' +
-
-      '<div class="foto-titulo">' +
-        escaparHTML(titulo) +
-      '</div>' +
-
-      '<img src="' +
-        imagem +
-      '" class="foto-relatorio">' +
-
-    '</div>'
-
-  );
-
-}
-
-
-/* =========================================================
-   GERAR CONTEÚDO DO RELATÓRIO
-========================================================= */
-
-function montarRelatorioPDF(){
-
-  const fotoFacialSaida =
-    blocoImagemPDF(
-      "Registro Facial — Saída",
-      dadosViagem.fotoFacialSaida
-    );
-
-
-  const fotoAvariaSaida =
-    blocoImagemPDF(
-      "Avaria — Saída",
-      dadosViagem.fotoAvariaSaida
-    );
-
-
-  const fotoAvariaChegada =
-    blocoImagemPDF(
-      "Avaria — Chegada",
-      dadosViagem.fotoAvariaChegada
-    );
-
-
-  /*
-    NÃO existe Registro Facial — Chegada
-    no relatório.
-
-    O PDF terá somente a foto facial
-    realizada na saída.
-  */
-
-
-  const assinaturaSaida =
-    dadosViagem.assinaturaSaida
-      ?
-        '<img src="' +
-        dadosViagem.assinaturaSaida +
-        '" class="assinatura-relatorio">'
-      :
-        "Não registrada";
-
-
-  const assinaturaChegada =
-    dadosViagem.assinaturaChegada
-      ?
-        '<img src="' +
-        dadosViagem.assinaturaChegada +
-        '" class="assinatura-relatorio">'
-      :
-        "Não registrada";
-
-
-  return `
-<!DOCTYPE html>
-
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>
-Relatório de Checklist de Veículo
-</title>
-
-<style>
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:#222;
-  margin:24px;
-  font-size:12px;
-}
-
-.cabecalho{
-  text-align:center;
-  border-bottom:3px solid #07579c;
-  padding-bottom:12px;
-  margin-bottom:18px;
-}
-
-.cabecalho h1{
-  color:#07579c;
-  font-size:22px;
-  margin:0 0 5px;
-}
-
-.cabecalho h2{
-  font-size:16px;
-  margin:0;
-}
-
-.secao{
-  margin-top:18px;
-}
-
-.secao h3{
-  background:#07579c;
-  color:white;
-  padding:8px;
-  font-size:14px;
-  margin:0 0 8px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-bottom:12px;
-}
-
-th,
-td{
-  border:1px solid #999;
-  padding:7px;
-  vertical-align:top;
-}
-
-th{
-  background:#edf3f7;
-  text-align:left;
-}
-
-.fotos{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-
-.foto-box{
-  width:31%;
-  min-width:180px;
-  border:1px solid #aaa;
-  padding:8px;
-  text-align:center;
-  page-break-inside:avoid;
-}
-
-.foto-titulo{
-  font-weight:bold;
-  margin-bottom:7px;
-}
-
-.foto-relatorio{
-  max-width:100%;
-  max-height:230px;
-  object-fit:contain;
-}
-
-.assinaturas{
-  display:flex;
-  gap:20px;
-  margin-top:10px;
-}
-
-.assinatura-box{
-  width:50%;
-  text-align:center;
-  border:1px solid #aaa;
-  padding:10px;
-  page-break-inside:avoid;
-}
-
-.assinatura-relatorio{
-  max-width:100%;
-  height:100px;
-  object-fit:contain;
-}
-
-.observacao{
-  border:1px solid #aaa;
-  padding:10px;
-  min-height:40px;
-  white-space:pre-wrap;
-}
-
-.rodape-pdf{
-  text-align:center;
-  margin-top:25px;
-  padding-top:10px;
-  border-top:1px solid #aaa;
-  font-size:10px;
-}
-
-@media print{
-
-  body{
-    margin:10mm;
-  }
-
-  .secao{
-    page-break-inside:auto;
-  }
-
-  .foto-box,
-  .assinatura-box{
-    page-break-inside:avoid;
-  }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="cabecalho">
-
-  <h1>COREN-PB</h1>
-
-  <h2>
-    RELATÓRIO DE CHECKLIST DE VEÍCULO
-  </h2>
-
-</div>
-
-
-<div class="secao">
-
-  <h3>1. DADOS DA VIAGEM</h3>
-
-  <table>
-
-    <tr>
-      <th>Veículo</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.veiculo
-        )}
-      </td>
-
-      <th>Placa</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.placa
-        )}
-      </td>
-    </tr>
-
-    <tr>
-      <th>Condutor</th>
-      <td colspan="3">
-        ${escaparHTML(
-          dadosViagem.condutor
-        )}
-      </td>
-    </tr>
-
-    <tr>
-      <th>Saída</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.dataHoraSaida
-        )}
-      </td>
-
-      <th>Chegada</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.dataHoraChegada
-        )}
-      </td>
-    </tr>
-
-    <tr>
-      <th>KM Saída</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.kmSaida
-        )}
-      </td>
-
-      <th>KM Chegada</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.kmChegada
-        )}
-      </td>
-    </tr>
-
-    <tr>
-      <th>KM Percorrido</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.kmPercorrido
-        )}
-      </td>
-
-      <th>Status</th>
-      <td>
-        FINALIZADA
-      </td>
-    </tr>
-
-  </table>
-
-</div>
-
-<div class="secao">
-
-  <h3>2. COMBUSTÍVEL</h3>
-
-  <table>
-
-    <tr>
-      <th>Combustível na Saída</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.combustivelSaida
-        )}
-      </td>
-
-      <th>Combustível na Chegada</th>
-      <td>
-        ${escaparHTML(
-          dadosViagem.combustivelChegada
-        )}
-      </td>
-    </tr>
-
-  </table>
-
-</div>
-
-
-<div class="secao">
-
-  <h3>3. CHECKLIST DE SAÍDA E CHEGADA</h3>
-
-  <table>
-
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Saída</th>
-        <th>Chegada</th>
-        <th>Observação da Saída</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      ${gerarLinhasChecklistPDF()}
-    </tbody>
-
-  </table>
-
-</div>
-
-
-<div class="secao">
-
-  <h3>4. OBSERVAÇÕES</h3>
-
-  <strong>Observação Geral da Saída:</strong>
-
-  <div class="observacao">
-    ${escaparHTML(
-      dadosViagem.observacaoSaida ||
-      "Sem observação."
-    )}
-  </div>
-
-  <br>
-
-  <strong>Observação da Chegada:</strong>
-
-  <div class="observacao">
-    ${escaparHTML(
-      dadosViagem.observacaoChegada ||
-      "Sem observação."
-    )}
-  </div>
-
-</div>
-
-
-<div class="secao">
-
-  <h3>5. REGISTROS FOTOGRÁFICOS</h3>
-
-  <div class="fotos">
-
-    ${fotoFacialSaida}
-
-    ${fotoAvariaSaida}
-
-    ${fotoAvariaChegada}
-
-  </div>
-
-</div>
-
-
-<div class="secao">
-
-  <h3>6. ASSINATURAS</h3>
-
-  <div class="assinaturas">
-
-    <div class="assinatura-box">
-
-      <strong>
-        Assinatura — Saída
-      </strong>
-
-      <br><br>
-
-      ${assinaturaSaida}
-
-    </div>
-
-
-    <div class="assinatura-box">
-
-      <strong>
-        Assinatura — Chegada
-      </strong>
-
-      <br><br>
-
-      ${assinaturaChegada}
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<div class="rodape-pdf">
-
-  Checklist Digital de Veículos — COREN-PB
-
-</div>
-
-</body>
-
-</html>
-`;
-
-}
-
-
-/* =========================================================
-   GERAR / BAIXAR PDF
-========================================================= */
+/* =====================================================
+   GERAR PDF
+===================================================== */
 
 function gerarPDF(){
 
@@ -4797,16 +3944,11 @@ function gerarPDF(){
   ){
 
     alert(
-      "Finalize a chegada antes de gerar o relatório."
+      "Finalize o checklist de chegada antes de gerar o PDF."
     );
 
     return;
-
   }
-
-
-  const conteudo =
-    montarRelatorioPDF();
 
 
   const janela =
@@ -4819,45 +3961,464 @@ function gerarPDF(){
   if(!janela){
 
     alert(
-      "O navegador bloqueou a abertura do relatório. Permita pop-ups e tente novamente."
+      "O navegador bloqueou a abertura do PDF. Permita pop-ups e tente novamente."
     );
 
     return;
-
   }
 
 
+  const itensSaidaHtml =
+    montarItensPDF(
+      dadosViagem.itensSaida
+    );
+
+
+  const itensChegadaHtml =
+    montarItensPDF(
+      dadosViagem.itensChegada
+    );
+
+
+  const fotoFacial =
+    dadosViagem.fotoFacialSaida
+      ? `
+        <h3>Registro Facial — Saída</h3>
+        <img
+          src="${dadosViagem.fotoFacialSaida}"
+          class="foto-pdf"
+        >
+      `
+      : "";
+
+
+  const fotoAvariaSaida =
+    dadosViagem.fotoAvariaSaida
+      ? `
+        <h3>Foto de Avaria — Saída</h3>
+        <img
+          src="${dadosViagem.fotoAvariaSaida}"
+          class="foto-pdf"
+        >
+      `
+      : "";
+
+
+  const fotoAvariaChegada =
+    dadosViagem.fotoAvariaChegada
+      ? `
+        <h3>Foto de Avaria — Chegada</h3>
+        <img
+          src="${dadosViagem.fotoAvariaChegada}"
+          class="foto-pdf"
+        >
+      `
+      : "";
+
+
+  const html = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+Checklist de Veículos - COREN-PB
+</title>
+
+<style>
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#222;
+  padding:25px;
+  font-size:13px;
+}
+
+h1{
+  color:#07579c;
+  text-align:center;
+  margin-bottom:5px;
+}
+
+.subtitulo{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+h2{
+  color:#07579c;
+  border-bottom:2px solid #07579c;
+  padding-bottom:5px;
+  margin-top:24px;
+}
+
+h3{
+  color:#07579c;
+  margin-top:18px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+th,
+td{
+  border:1px solid #999;
+  padding:7px;
+  text-align:left;
+  vertical-align:top;
+}
+
+th{
+  background:#eef5fa;
+}
+
+.foto-pdf{
+  max-width:420px;
+  max-height:350px;
+  display:block;
+  margin:10px auto 20px;
+  border:1px solid #aaa;
+}
+
+.assinatura{
+  max-width:350px;
+  max-height:150px;
+  border:1px solid #bbb;
+  margin-top:10px;
+}
+
+@media print{
+
+  button{
+    display:none;
+  }
+
+  body{
+    padding:0;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+CHECKLIST DIGITAL DE VEÍCULOS
+</h1>
+
+<div class="subtitulo">
+  <strong>COREN-PB</strong><br>
+  Conselho Regional de Enfermagem da Paraíba
+</div>
+
+
+<h2>Dados da Viagem</h2>
+
+<table>
+
+<tr>
+  <th>Veículo</th>
+  <td>${dadosViagem.veiculo || ""}</td>
+
+  <th>Placa</th>
+  <td>${dadosViagem.placa || ""}</td>
+</tr>
+
+<tr>
+  <th>Condutor</th>
+  <td colspan="3">
+    ${dadosViagem.condutor || ""}
+  </td>
+</tr>
+
+<tr>
+  <th>Saída</th>
+  <td>
+    ${dadosViagem.dataHoraSaida || ""}
+  </td>
+
+  <th>Chegada</th>
+  <td>
+    ${dadosViagem.dataHoraChegada || ""}
+  </td>
+</tr>
+
+<tr>
+  <th>KM Saída</th>
+  <td>
+    ${formatarKM(dadosViagem.kmSaida)}
+  </td>
+
+  <th>KM Chegada</th>
+  <td>
+    ${formatarKM(dadosViagem.kmChegada)}
+  </td>
+</tr>
+
+<tr>
+  <th>KM Percorrido</th>
+  <td>
+    ${formatarKM(dadosViagem.kmPercorrido)}
+  </td>
+
+  <th>Status</th>
+  <td>FINALIZADA</td>
+</tr>
+
+<tr>
+  <th>Combustível Saída</th>
+  <td>
+    ${dadosViagem.combustivelSaida || ""}
+  </td>
+
+  <th>Combustível Chegada</th>
+  <td>
+    ${dadosViagem.combustivelChegada || ""}
+  </td>
+</tr>
+
+</table>
+
+
+<h2>Checklist de Saída</h2>
+
+${itensSaidaHtml}
+
+<p>
+  <strong>Observação Geral:</strong>
+  ${dadosViagem.observacaoSaida || "Sem observação."}
+</p>
+
+
+<h3>Assinatura do Condutor — Saída</h3>
+
+<img
+  src="${dadosViagem.assinaturaSaida || ""}"
+  class="assinatura"
+>
+
+
+<h2>Checklist de Chegada</h2>
+
+${itensChegadaHtml}
+
+<p>
+  <strong>Observação Geral:</strong>
+  ${dadosViagem.observacaoChegada || "Sem observação."}
+</p>
+
+
+<h3>Assinatura do Condutor — Chegada</h3>
+
+<img
+  src="${dadosViagem.assinaturaChegada || ""}"
+  class="assinatura"
+>
+
+
+<h2>Registros Fotográficos</h2>
+
+${fotoFacial}
+
+${fotoAvariaSaida}
+
+${fotoAvariaChegada}
+
+
+<script>
+
+window.onload = function(){
+
+  setTimeout(function(){
+
+    window.print();
+
+  },700);
+
+};
+
+<\/script>
+
+</body>
+</html>
+`;
+
+
   janela.document.open();
-
-  janela.document.write(
-    conteudo
-  );
-
+  janela.document.write(html);
   janela.document.close();
-
-
-  janela.onload =
-    function(){
-
-      setTimeout(
-        function(){
-
-          janela.focus();
-
-          janela.print();
-
-        },
-        500
-      );
-
-    };
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   MONTAR ITENS DO PDF
+===================================================== */
+
+function montarItensPDF(dados){
+
+  if(!dados){
+    return "<p>Sem dados.</p>";
+  }
+
+
+  let html = `
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Situação</th>
+        <th>Observação</th>
+      </tr>
+  `;
+
+
+  Object.keys(dados)
+    .forEach(function(chave){
+
+      const item =
+        dados[chave];
+
+
+      const nome =
+        nomeItemPDF(chave);
+
+
+      html += `
+        <tr>
+          <td>${nome}</td>
+          <td>${item.status || ""}</td>
+          <td>${item.observacao || ""}</td>
+        </tr>
+      `;
+
+    });
+
+
+  html += "</table>";
+
+  return html;
+
+}
+
+
+/* =====================================================
+   NOMES DOS ITENS NO PDF
+===================================================== */
+
+function nomeItemPDF(chave){
+
+  const nomes = {
+
+    pneusDianteirosSaida:
+      "Pneus dianteiros",
+
+    pneusTraseirosSaida:
+      "Pneus traseiros",
+
+    parabrisaSaida:
+      "Para-brisa",
+
+    faroisSaida:
+      "Faróis dianteiros / Piscas",
+
+    neblinaSaida:
+      "Faróis de neblina",
+
+    palhetasDianteirasSaida:
+      "Palhetas dianteiras",
+
+    palhetaTraseiraSaida:
+      "Palheta traseira",
+
+    lanternasSaida:
+      "Lanternas / Piscas traseiros",
+
+    extintorSaida:
+      "Extintor de incêndio",
+
+    bancosSaida:
+      "Bancos",
+
+    tapetesSaida:
+      "Tapetes",
+
+    radioSaida:
+      "Rádio / Multimídia",
+
+    arCondicionadoSaida:
+      "Ar-condicionado",
+
+    buzinaSaida:
+      "Buzina",
+
+    cintoSaida:
+      "Cinto de segurança",
+
+    pneusDianteirosChegada:
+      "Pneus dianteiros",
+
+    pneusTraseirosChegada:
+      "Pneus traseiros",
+
+    parabrisaChegada:
+      "Para-brisa",
+
+    faroisChegada:
+      "Faróis dianteiros / Piscas",
+
+    neblinaChegada:
+      "Faróis de neblina",
+
+    palhetasDianteirasChegada:
+      "Palhetas dianteiras",
+
+    palhetaTraseiraChegada:
+      "Palheta traseira",
+
+    lanternasChegada:
+      "Lanternas / Piscas traseiros",
+
+    extintorChegada:
+      "Extintor de incêndio",
+
+    bancosChegada:
+      "Bancos",
+
+    tapetesChegada:
+      "Tapetes",
+
+    radioChegada:
+      "Rádio / Multimídia",
+
+    arCondicionadoChegada:
+      "Ar-condicionado",
+
+    buzinaChegada:
+      "Buzina",
+
+    cintoChegada:
+      "Cinto de segurança"
+
+  };
+
+
+  return nomes[chave] || chave;
+
+}
+
+
+/* =====================================================
    NOVO CHECKLIST
-========================================================= */
+===================================================== */
 
 function novoChecklist(){
 
@@ -4882,91 +4443,48 @@ function novoChecklist(){
 }
 
 
-/* =========================================================
-   REMOVER DESTAQUE QUANDO O CAMPO FOR CORRIGIDO
-========================================================= */
+/* =====================================================
+   INICIAR APLICATIVO
+===================================================== */
 
-document.addEventListener(
-  "input",
-  function(evento){
-
-    const elemento =
-      evento.target;
-
-    if(
-      elemento &&
-      elemento.classList
-    ){
-
-      elemento.classList.remove(
-        "campo-obrigatorio-erro"
-      );
-
-    }
-
-  }
-);
-
-
-document.addEventListener(
-  "change",
-  function(evento){
-
-    const elemento =
-      evento.target;
-
-    if(
-      elemento &&
-      elemento.classList
-    ){
-
-      elemento.classList.remove(
-        "campo-obrigatorio-erro"
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   INICIALIZAÇÃO DO APLICATIVO
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
+window.addEventListener(
+  "load",
   function(){
 
     carregarVeiculos();
 
 
-    const dataHoraSaida =
+    document.getElementById(
+      "dataHoraSaida"
+    ).value =
+      dataHoraAtual();
+
+
+    configurarCanvas(
+      "assinaturaSaida",
+      "saida"
+    );
+
+
+    configurarCanvas(
+      "assinaturaChegada",
+      "chegada"
+    );
+
+
+    const campoKmChegada =
       document.getElementById(
-        "dataHoraSaida"
+        "kmChegada"
       );
 
 
-    if(dataHoraSaida){
-
-      dataHoraSaida.value =
-        formatarDataHora(
-          new Date()
-        );
-
-    }
+    campoKmChegada.addEventListener(
+      "input",
+      atualizarKmChegada
+    );
 
 
-    prepararAssinaturaSaida();
-
-
-    /*
-      Se existir viagem em andamento,
-      o aplicativo abre automaticamente
-      no registro de chegada.
-    */
-
-    recuperarViagem();
+    restaurarViagem();
 
   }
 );
@@ -4974,5 +4492,4 @@ document.addEventListener(
 </script>
 
 </body>
-
 </html>
