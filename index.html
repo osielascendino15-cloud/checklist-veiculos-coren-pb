@@ -3312,18 +3312,12 @@ function encerrarChecklistAposPDF(){
   ).textContent =
     "✅ VIAGEM ENCERRADA";
 
-  setTimeout(
-    function(){
+  prepararNovoChecklist();
 
-      window.location.replace(
-        window.location.pathname +
-        "?novo=" +
-        Date.now()
-      );
-
-    },
-    1200
-  );
+window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+});
 }
 
 
