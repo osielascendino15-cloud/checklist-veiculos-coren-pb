@@ -969,9 +969,17 @@ small{
         📄 BAIXAR / SALVAR PDF
       </button>
 
+      <button
+  id="btnNovoChecklist"
+  class="btn btn-verde oculto"
+  type="button"
+  onclick="encerrarChecklistAposPDF()"
+>
+  ✅ ABRIR NOVO CHECKLIST
+</button>
+
      <small>
-  Salve o relatório em PDF. Depois confirme no relatório
-  que o PDF foi salvo para encerrar e iniciar um novo checklist.
+Após salvar o PDF, toque em “ABRIR NOVO CHECKLIST”.
 </small>
 
     </div>
@@ -2928,6 +2936,11 @@ function criarFotoPDF(
 ========================= */
 
 function gerarPDF(){
+  document.getElementById(
+  "btnNovoChecklist"
+).classList.remove(
+  "oculto"
+);
 
   const janela =
     window.open(
@@ -3240,12 +3253,7 @@ ${criarFotoPDF(
 2. Depois toque em “CONFIRMO QUE O PDF FOI SALVO — NOVO CHECKLIST”.
   </strong>
 
-  <button
-    class="salvar"
-    onclick="salvarPDF()"
-  >
-    📄 SALVAR / IMPRIMIR PDF
-  </button>
+  
 
   
 
@@ -3270,22 +3278,7 @@ ${criarFotoPDF(
    ENCERRAR APÓS PDF
 ========================= */
 
-function salvarPDF(){
 
-  window.print();
-
-  setTimeout(function(){
-
-    if(
-      window.opener &&
-      !window.opener.closed
-    ){
-      window.opener.encerrarChecklistAposPDF();
-      window.close();
-    }
-
-  }, 1500);
-}
 function encerrarChecklistAposPDF(){
 
   try{
