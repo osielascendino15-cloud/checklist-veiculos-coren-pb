@@ -969,11 +969,10 @@ small{
         📄 BAIXAR / SALVAR PDF
       </button>
 
-      <small>
-        Primeiro salve o PDF. Depois use o botão
-        “PDF SALVO — ENCERRAR CHECKLIST”
-        que aparecerá no relatório.
-      </small>
+     <small>
+  Salve o relatório em PDF. Depois confirme no relatório
+  que o PDF foi salvo para encerrar e iniciar um novo checklist.
+</small>
 
     </div>
 
@@ -3237,7 +3236,8 @@ ${criarFotoPDF(
 <div class="acoes">
 
   <strong>
-    Primeiro salve o relatório em PDF.
+    1. Salve o relatório em PDF.<br><br>
+2. Depois toque em “CONFIRMO QUE O PDF FOI SALVO — NOVO CHECKLIST”.
   </strong>
 
   <button
@@ -3246,25 +3246,20 @@ ${criarFotoPDF(
   >
     📄 SALVAR / IMPRIMIR PDF
   </button>
-
-  <button
-    class="encerrar"
-    onclick="
-      if(
-        window.opener &&
-        !window.opener.closed
-      ){
+<button
+  class="salvar"
+  onclick="
+    if(confirm('CONFIRMA que o PDF foi salvo no celular?')){
+      if(window.opener && !window.opener.closed){
         window.opener.encerrarChecklistAposPDF();
         window.close();
-      }else{
-        alert(
-          'Volte ao aplicativo para iniciar um novo checklist.'
-        );
       }
-    "
-  >
-    ✅ PDF SALVO — ENCERRAR CHECKLIST
-  </button>
+    }
+  "
+>
+  ✅ CONFIRMO QUE O PDF FOI SALVO — NOVO CHECKLIST
+</button>
+  
 
 </div>
 
@@ -3286,6 +3281,7 @@ ${criarFotoPDF(
 /* =========================
    ENCERRAR APÓS PDF
 ========================= */
+
 
 function encerrarChecklistAposPDF(){
 
