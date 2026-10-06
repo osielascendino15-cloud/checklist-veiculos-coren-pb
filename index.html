@@ -3242,23 +3242,11 @@ ${criarFotoPDF(
 
   <button
     class="salvar"
-    onclick="window.print()"
+    onclick="salvarPDF()"
   >
     📄 SALVAR / IMPRIMIR PDF
   </button>
-<button
-  class="salvar"
-  onclick="
-    if(confirm('CONFIRMA que o PDF foi salvo no celular?')){
-      if(window.opener && !window.opener.closed){
-        window.opener.encerrarChecklistAposPDF();
-        window.close();
-      }
-    }
-  "
->
-  ✅ CONFIRMO QUE O PDF FOI SALVO — NOVO CHECKLIST
-</button>
+
   
 
 </div>
@@ -3282,7 +3270,22 @@ ${criarFotoPDF(
    ENCERRAR APÓS PDF
 ========================= */
 
+function salvarPDF(){
 
+  window.print();
+
+  setTimeout(function(){
+
+    if(
+      window.opener &&
+      !window.opener.closed
+    ){
+      window.opener.encerrarChecklistAposPDF();
+      window.close();
+    }
+
+  }, 1500);
+}
 function encerrarChecklistAposPDF(){
 
   try{
