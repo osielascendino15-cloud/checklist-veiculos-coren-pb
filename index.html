@@ -3694,6 +3694,12 @@ function encerrarChecklistAposPDF(){
 
 function restaurarFinalizada(){
 
+    localStorage.removeItem(
+    CHAVE_FINALIZADA
+  );
+
+  return false;
+
   const salvo =
     localStorage.getItem(
       CHAVE_FINALIZADA
