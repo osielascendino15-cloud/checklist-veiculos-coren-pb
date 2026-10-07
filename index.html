@@ -573,6 +573,11 @@ small{
         🗑️ APAGAR FOTO(S)
       </button>
 
+          <div
+  id="galeriaAvariaSaida"
+  class="galeria-avarias"
+></div>
+
     </div>
 
 
@@ -880,6 +885,11 @@ small{
       >
         🗑️ APAGAR FOTO(S)
       </button>
+
+      <div
+  id="galeriaAvariaChegada"
+  class="galeria-avarias"
+></div>
 
     </div>
 
@@ -1903,6 +1913,22 @@ function processarFoto(
             base64
           );
 
+          if(
+  tipo === "avariaSaida"
+){
+  atualizarGaleriaAvarias(
+    "saida"
+  );
+}
+
+if(
+  tipo === "avariaChegada"
+){
+  atualizarGaleriaAvarias(
+    "chegada"
+  );
+}
+
 
           const preview =
             document.getElementById(
@@ -2051,6 +2077,71 @@ function salvarFoto(
 
 }
 
+  function atualizarGaleriaAvarias(
+  etapa
+){
+
+  let fotos = [];
+  let idGaleria = "";
+
+  if(
+    etapa === "saida"
+  ){
+    fotos = fotosAvariaSaidaBase64;
+    idGaleria = "galeriaAvariaSaida";
+  }
+
+  if(
+    etapa === "chegada"
+  ){
+    fotos = fotosAvariaChegadaBase64;
+    idGaleria = "galeriaAvariaChegada";
+  }
+
+  const galeria =
+    document.getElementById(
+      idGaleria
+    );
+
+  if(!galeria){
+    return;
+  }
+
+  galeria.innerHTML = "";
+
+  fotos.forEach(
+    function(foto, indice){
+
+      const bloco =
+        document.createElement(
+          "div"
+        );
+
+      bloco.style.marginTop = "10px";
+      bloco.style.textAlign = "center";
+
+      bloco.innerHTML =
+        "<strong>📷 Foto " +
+        (indice + 1) +
+        "</strong><br>" +
+        "<img src='" +
+        foto +
+        "' style='" +
+        "max-width:180px;" +
+        "max-height:180px;" +
+        "margin-top:6px;" +
+        "border-radius:8px;" +
+        "border:1px solid #ccc;" +
+        "'>";
+
+      galeria.appendChild(
+        bloco
+      );
+
+    }
+  );
+}
+
   /* =========================
    APAGAR FOTOS DE AVARIA
 ========================= */
@@ -2089,6 +2180,10 @@ function apagarFotoAvaria(
     ).style.display =
       "none";
 
+
+    atualizarGaleriaAvarias(
+  "saida"
+);
   }
 
 
@@ -2122,6 +2217,9 @@ function apagarFotoAvaria(
     ).style.display =
       "none";
 
+    atualizarGaleriaAvarias(
+  "chegada"
+);
   }
 
 }
@@ -3935,6 +4033,14 @@ function restaurarViagem(){
     fotoFacialChegadaBase64 =
       dadosViagem.fotoFacialChegada || "";
 
+    atualizarGaleriaAvarias(
+  "saida"
+);
+
+atualizarGaleriaAvarias(
+  "chegada"
+);
+
 
     mostrarViagemEmAndamento();
 
@@ -4022,6 +4128,13 @@ function restaurarFinalizada(){
 
     fotoFacialChegadaBase64 =
       dadosViagem.fotoFacialChegada || "";
+    atualizarGaleriaAvarias(
+  "saida"
+);
+
+atualizarGaleriaAvarias(
+  "chegada"
+);
 
 
     mostrarEtapaFinal();
