@@ -3625,7 +3625,7 @@ async function gerarPDF(){
       "absolute";
 
     areaPDF.style.left =
-      "-10000px";
+  "0";
 
     areaPDF.style.top =
       "0";
@@ -4081,7 +4081,10 @@ async function gerarPDF(){
 
       html2canvas:{
         scale:1.5,
-        useCORS:true
+        useCORS:true,
+        scrollX:0,
+scrollY:0
+        
       },
 
       jsPDF:{
