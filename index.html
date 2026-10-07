@@ -3555,504 +3555,238 @@ function carregarHtml2Pdf(){
 async function gerarPDF(){
 
   const botao =
-    document.getElementById(
-      "btnBaixarPDF"
-    );
-
-  let areaPDF = null;
+    document.getElementById("btnBaixarPDF");
 
   botao.disabled = true;
+  botao.textContent = "⏳ PREPARANDO PDF...";
 
-  botao.textContent =
-    "⏳ PREPARANDO PDF...";
-
+  let areaPDF = null;
 
   try{
 
     await carregarHtml2Pdf();
 
-
     const fotosSaida =
-      Array.isArray(
-        dadosViagem.fotosAvariaSaida
-      )
+      Array.isArray(dadosViagem.fotosAvariaSaida)
         ? dadosViagem.fotosAvariaSaida
         : (
             dadosViagem.fotoAvariaSaida
-              ? [
-                  dadosViagem.fotoAvariaSaida
-                ]
+              ? [dadosViagem.fotoAvariaSaida]
               : []
           );
 
-
     const fotosChegada =
-      Array.isArray(
-        dadosViagem.fotosAvariaChegada
-      )
+      Array.isArray(dadosViagem.fotosAvariaChegada)
         ? dadosViagem.fotosAvariaChegada
         : (
             dadosViagem.fotoAvariaChegada
-              ? [
-                  dadosViagem.fotoAvariaChegada
-                ]
+              ? [dadosViagem.fotoAvariaChegada]
               : []
           );
 
+    areaPDF = document.createElement("div");
 
-    areaPDF =
-      document.createElement(
-        "div"
-      );
+    areaPDF.style.width = "700px";
+    areaPDF.style.padding = "25px";
+    areaPDF.style.backgroundColor = "#ffffff";
+    areaPDF.style.color = "#000000";
+    areaPDF.style.fontFamily = "Arial, sans-serif";
 
-
-    areaPDF.style.width =
-      "750px";
-
-    areaPDF.style.padding =
-      "25px";
-
-    areaPDF.style.background =
-      "#ffffff";
-
-    areaPDF.style.color =
-      "#222222";
-
-    areaPDF.style.fontFamily =
-      "Arial, Helvetica, sans-serif";
-
-    areaPDF.style.position =
-      "absolute";
-
-    areaPDF.style.left =
-  "0";
-
-    areaPDF.style.top =
-      "0";
-
+    /*
+      IMPORTANTE:
+      o relatório fica dentro da página normalmente
+      enquanto o PDF é produzido.
+      Não usamos posição fora da tela.
+    */
+    areaPDF.style.position = "relative";
+    areaPDF.style.display = "block";
 
     areaPDF.innerHTML = `
 
-      <div
-        style="
-          text-align:center;
-          margin-bottom:20px;
-        "
-      >
-
-        <h1
-          style="
-            color:#07579c;
-            margin:0 0 5px;
-          "
-        >
+      <div style="text-align:center;margin-bottom:20px;">
+        <h1 style="color:#07579c;margin:0;">
           COREN-PB
         </h1>
 
-        <h2
-          style="
-            margin:0;
-            font-size:20px;
-          "
-        >
+        <h2 style="margin:8px 0;">
           CHECKLIST DIGITAL DE VEÍCULOS
         </h2>
-
       </div>
 
-
-      <h3
-        style="
-          color:#07579c;
-          margin-bottom:8px;
-        "
-      >
-        Dados da Viagem
+      <h3 style="color:#07579c;">
+        DADOS DA VIAGEM
       </h3>
 
-
-      <table
-        style="
-          width:100%;
-          border-collapse:collapse;
-          font-size:13px;
-        "
-      >
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        font-size:13px;
+        margin-bottom:20px;
+      ">
 
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-              width:35%;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Motorista/Condutor
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${escaparHTML(
-              dadosViagem.condutor || ""
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${escaparHTML(dadosViagem.condutor || "")}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Veículo
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${escaparHTML(
-              dadosViagem.veiculo || ""
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${escaparHTML(dadosViagem.veiculo || "")}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Placa
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${escaparHTML(
-              dadosViagem.placa || ""
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${escaparHTML(dadosViagem.placa || "")}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Data/Hora da Saída
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${formatarDataHora(
-              dadosViagem.dataHoraSaida
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${formatarDataHora(dadosViagem.dataHoraSaida)}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             KM de Saída
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${formatarNumero(
-              dadosViagem.kmSaida
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${formatarNumero(dadosViagem.kmSaida)}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Combustível — Saída
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${escaparHTML(
-              dadosViagem.combustivelSaida || ""
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${escaparHTML(dadosViagem.combustivelSaida || "")}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Data/Hora da Chegada
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${formatarDataHora(
-              dadosViagem.dataHoraChegada
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${formatarDataHora(dadosViagem.dataHoraChegada)}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             KM de Chegada
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${formatarNumero(
-              dadosViagem.kmChegada
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${formatarNumero(dadosViagem.kmChegada)}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             KM Percorrido
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${formatarNumero(
-              dadosViagem.kmPercorrido
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${formatarNumero(dadosViagem.kmPercorrido)}
           </td>
-
         </tr>
 
-
         <tr>
-
-          <th
-            style="
-              border:1px solid #999;
-              padding:8px;
-              background:#eef4f8;
-              text-align:left;
-            "
-          >
+          <th style="border:1px solid #777;padding:7px;text-align:left;">
             Combustível — Chegada
           </th>
-
-          <td
-            style="
-              border:1px solid #999;
-              padding:8px;
-            "
-          >
-            ${escaparHTML(
-              dadosViagem.combustivelChegada || ""
-            )}
+          <td style="border:1px solid #777;padding:7px;">
+            ${escaparHTML(dadosViagem.combustivelChegada || "")}
           </td>
-
         </tr>
 
       </table>
-
 
       ${criarTabelaPDF(
         "Checklist Externo — Saída",
         dadosViagem.checklistExternoSaida
       )}
 
-
       ${criarTabelaPDF(
         "Checklist Interno — Saída",
         dadosViagem.checklistInternoSaida
       )}
-
 
       ${criarFotosAvariaPDF(
         "Fotos de Avaria — Saída",
         fotosSaida
       )}
 
-
       ${criarFotoPDF(
         "Registro Facial — Saída",
         dadosViagem.fotoFacialSaida
       )}
-
 
       ${criarTabelaPDF(
         "Checklist Externo — Chegada",
         dadosViagem.checklistExternoChegada
       )}
 
-
       ${criarTabelaPDF(
         "Checklist Interno — Chegada",
         dadosViagem.checklistInternoChegada
       )}
-
 
       ${criarFotosAvariaPDF(
         "Fotos de Avaria — Chegada",
         fotosChegada
       )}
 
-
       ${criarFotoPDF(
         "Registro Facial — Chegada",
         dadosViagem.fotoFacialChegada
       )}
 
-
-      <div
-        style="
-          margin-top:25px;
-          text-align:center;
-          font-size:11px;
-          color:#666;
-        "
-      >
+      <div style="
+        margin-top:25px;
+        text-align:center;
+        font-size:11px;
+      ">
         Checklist Digital de Veículos — COREN-PB
       </div>
-
     `;
 
+    document.body.appendChild(areaPDF);
 
-    document.body.appendChild(
-      areaPDF
-    );
-
+    /*
+      Espera o navegador montar o relatório
+      e carregar as imagens antes da conversão.
+    */
+    await new Promise(function(resolve){
+      setTimeout(resolve, 1000);
+    });
 
     const placaArquivo =
-      String(
-        dadosViagem.placa ||
-        "SEM-PLACA"
-      )
-        .replace(
-          /[^a-zA-Z0-9-]/g,
-          "_"
-        );
+      String(dadosViagem.placa || "SEM-PLACA")
+        .replace(/[^a-zA-Z0-9-]/g, "_");
 
-
-    const hoje =
-      new Date();
-
+    const hoje = new Date();
 
     const dataArquivo =
-      String(
-        hoje.getFullYear()
-      ) +
+      hoje.getFullYear() +
       "-" +
-      String(
-        hoje.getMonth() + 1
-      ).padStart(
-        2,
-        "0"
-      ) +
+      String(hoje.getMonth() + 1).padStart(2, "0") +
       "-" +
-      String(
-        hoje.getDate()
-      ).padStart(
-        2,
-        "0"
-      );
-
+      String(hoje.getDate()).padStart(2, "0");
 
     const nomeArquivo =
       "Checklist_COREN-PB_" +
@@ -4061,47 +3795,33 @@ async function gerarPDF(){
       dataArquivo +
       ".pdf";
 
-
     const opcoes = {
 
-      margin:[
-        8,
-        8,
-        8,
-        8
-      ],
+      margin: [8, 8, 8, 8],
 
-      filename:
-        nomeArquivo,
+      filename: nomeArquivo,
 
-      image:{
-        type:"jpeg",
-        quality:0.92
+      image: {
+        type: "jpeg",
+        quality: 0.95
       },
 
-      html2canvas:{
-        scale:1.5,
-        useCORS:true,
-        scrollX:0,
-scrollY:0
-        
+      html2canvas: {
+        scale: 1.5,
+        useCORS: true,
+        backgroundColor: "#ffffff"
       },
 
-      jsPDF:{
-        unit:"mm",
-        format:"a4",
-        orientation:"portrait"
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
       },
 
-      pagebreak:{
-        mode:[
-          "css",
-          "legacy"
-        ]
+      pagebreak: {
+        mode: ["css", "legacy"]
       }
-
     };
-
 
     await window
       .html2pdf()
@@ -4109,43 +3829,29 @@ scrollY:0
       .from(areaPDF)
       .save();
 
-
-    dadosViagem.pdfBaixado =
-      true;
-
+    dadosViagem.pdfBaixado = true;
 
     localStorage.setItem(
       CHAVE_FINALIZADA,
-      JSON.stringify(
-        dadosViagem
-      )
+      JSON.stringify(dadosViagem)
     );
 
+    document
+      .getElementById("btnNovoChecklist")
+      .classList.remove("oculto");
 
-    document.getElementById(
-      "btnNovoChecklist"
-    ).classList.remove(
-      "oculto"
-    );
-
-
-    document.getElementById(
-      "avisoPDF"
-    ).innerHTML =
+    document.getElementById("avisoPDF").innerHTML =
       "✅ PDF BAIXADO.<br>" +
       "O checklist foi concluído. " +
       "Agora você pode abrir um novo checklist.";
 
-
   }catch(erro){
 
-    console.error(
-      erro
-    );
+    console.error(erro);
 
     alert(
       "Não foi possível gerar o PDF. " +
-      "Verifique a internet e tente novamente."
+      "Tente novamente."
     );
 
   }finally{
@@ -4154,22 +3860,12 @@ scrollY:0
       areaPDF &&
       areaPDF.parentNode
     ){
-
-      areaPDF.parentNode.removeChild(
-        areaPDF
-      );
-
+      areaPDF.parentNode.removeChild(areaPDF);
     }
 
-
-    botao.disabled =
-      false;
-
-    botao.textContent =
-      "📄 BAIXAR PDF";
-
+    botao.disabled = false;
+    botao.textContent = "📄 BAIXAR PDF";
   }
-
 }
 
   /* =========================
